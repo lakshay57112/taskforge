@@ -24,6 +24,15 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Check the API key secret
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::error::No GEMINI_API_KEY secret. Add it under Settings > Secrets and variables > Actions > Secrets > New repository secret."
+            exit 1
+          fi
+
       - name: Install
         run: pip install -e ".[harbor,dev]"
 
