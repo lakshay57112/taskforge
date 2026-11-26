@@ -1,0 +1,349 @@
+"""Model client with a content-addressed response cache.
+
+Every request is keyed by (model, system prompt, user prompt, temperature, seed,
+json flag, variant). In "live" mode answers are fetched and written to the cache;
+in "replay" mode only the cache is read, so a recorded run can be reproduced
+exactly without an API key or network access.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import re
+import time
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Callable, Protocol
+
+
+class LLMError(RuntimeError):
+    pass
+
+
+class CacheMiss(LLMError):
+    pass
+
+
+@dataclass
+class Usage:
+    calls: int = 0
+    cache_hits: int = 0
+    prompt_tokens: int = 0
+    output_tokens: int = 0
+    seconds: float = 0.0
+    by_stage: dict[str, int] = field(default_factory=dict)
+    by_model: dict[str, int] = field(default_factory=dict)
+
+    def as_dict(self) -> dict:
+        return {
+            "api_calls": self.calls,
+            "cache_hits": self.cache_hits,
+            "prompt_tokens": self.prompt_tokens,
+            "output_tokens": self.output_tokens,
+            "api_seconds": round(self.seconds, 1),
+            "requests_by_stage": dict(sorted(self.by_stage.items())),
+            "calls_by_model": dict(sorted(self.by_model.items())),
+        }
+
+
+class Backend(Protocol):
+    model: str
+
+    def generate(
+        self, system: str, prompt: str, *, temperature: float, seed: int, json_mode: bool
+    ) -> tuple[str, dict]: ...
+
+
+class GeminiBackend:
+    """Google Gemini through the google-genai SDK. Reads GEMINI_API_KEY (or GOOGLE_API_KEY)."""
+
+    def __init__(self, model: str, send_temperature: bool = False):
+        self.send_temperature = send_temperature
+        try:
+            from google import genai
+            from google.genai import types
+        except ImportError as exc:  # pragma: no cover - depends on the environment
+            raise LLMError("google-genai is not installed: pip install google-genai") from exc
+        key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+        if not key:
+            raise LLMError(
+                "Set GEMINI_API_KEY before running in live mode "
+                "(or use --replay to run from the recorded cache)."
+            )
+        self.model = model
+        self._types = types
+        self._client = genai.Client(api_key=key)
+
+    def generate(self, system, prompt, *, temperature, seed, json_mode, model=None):
+        types = self._types
+        config = types.GenerateContentConfig(
+            system_instruction=system,
+            temperature=temperature if self.send_temperature else None,
+            seed=seed,
+            response_mime_type="application/json" if json_mode else "text/plain",
+        )
+        resp = self._client.models.generate_content(
+            model=model or self.model, contents=prompt, config=config
+        )
+        text = resp.text or ""
+        meta = getattr(resp, "usage_metadata", None)
+        usage = {
+            "prompt_tokens": getattr(meta, "prompt_token_count", 0) or 0,
+            "output_tokens": getattr(meta, "candidates_token_count", 0) or 0,
+        }
+        if not text.strip():
+            raise LLMError("Model returned an empty response")
+        return text, usage
+
+    def list_models(self) -> list[str]:
+        return sorted(m.name for m in self._client.models.list())
+
+
+class ScriptedBackend:
+    """Deterministic backend for tests: a function maps (stage, prompt) to a reply."""
+
+    def __init__(self, responder: Callable[[str, str, str], str], model: str = "scripted"):
+        self.model = model
+        self._responder = responder
+        self.stage = ""
+
+    def generate(self, system, prompt, *, temperature, seed, json_mode, model=None):
+        return self._responder(self.stage, system, prompt), {"prompt_tokens": 0, "output_tokens": 0}
+
+
+class LLM:
+    def __init__(
+        self,
+        backend: Backend | None,
+        *,
+        model: str,
+        cache_dir: Path,
+        temperature: float = 0.4,
+        seed: int = 1234,
+        mode: str = "live",
+        log: Callable[[str], None] | None = None,
+        fallbacks: list[str] | tuple[str, ...] = (),
+        max_wait: float = 1200.0,
+    ):
+        self.backend = backend
+        self.model = model
+        self.max_wait = max_wait
+        self.fallbacks = [m for m in fallbacks if m and m != model]
+        self.cache_dir = Path(cache_dir) / "llm"
+        self.temperature = temperature
+        self.seed = seed
+        self.mode = mode
+        self.usage = Usage()
+        self._log = log or (lambda _msg: None)
+        # Order of requests per stage. Replay falls back to it when a prompt differs
+        # only cosmetically from the recorded one (other machine paths, timings).
+        self._seq: dict[str, int] = {}
+        self.transcript: list[dict] = []
+        self._recorded = self._load_transcript()
+
+    def _transcript_path(self) -> Path:
+        return self.cache_dir.parent / "transcript.json"
+
+    def _load_transcript(self) -> dict[tuple[str, int], str]:
+        path = self._transcript_path()
+        if not path.exists():
+            return {}
+        try:
+            rows = json.loads(path.read_text(encoding="utf-8"))
+        except ValueError:
+            return {}
+        return {(r["stage"], r["index"]): r["key"] for r in rows}
+
+    def save_transcript(self) -> None:
+        if self.mode != "live" or not self.transcript:
+            return
+        path = self._transcript_path()
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(self.transcript, indent=0), encoding="utf-8")
+
+    # -- cache -----------------------------------------------------------------
+    def _key(self, system: str, prompt: str, temperature: float, seed: int, json_mode: bool, variant: int) -> str:
+        blob = json.dumps(
+            [self.model, system, prompt, round(temperature, 3), seed, json_mode, variant],
+            ensure_ascii=False,
+        )
+        return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+    def _cache_path(self, key: str) -> Path:
+        return self.cache_dir / key[:2] / f"{key}.json"
+
+    # -- public API ------------------------------------------------------------
+    def complete(
+        self,
+        system: str,
+        prompt: str,
+        *,
+        stage: str,
+        json_mode: bool = False,
+        temperature: float | None = None,
+        seed: int | None = None,
+        variant: int = 0,
+    ) -> str:
+        temperature = self.temperature if temperature is None else temperature
+        seed = self.seed if seed is None else seed
+        key = self._key(system, prompt, temperature, seed, json_mode, variant)
+        path = self._cache_path(key)
+        self.usage.by_stage[stage] = self.usage.by_stage.get(stage, 0) + 1
+        index = self._seq.get(stage, 0)
+        self._seq[stage] = index + 1
+        self.transcript.append({"stage": stage, "index": index, "key": key})
+
+        if path.exists():
+            self.usage.cache_hits += 1
+            return json.loads(path.read_text(encoding="utf-8"))["response"]
+        if self.mode == "replay":
+            recorded = self._recorded.get((stage, index))
+            if recorded and self._cache_path(recorded).exists():
+                self.usage.cache_hits += 1
+                self._log(f"  [{stage}] replayed recorded answer #{index} (prompt differed slightly)")
+                return json.loads(self._cache_path(recorded).read_text(encoding="utf-8"))["response"]
+            raise CacheMiss(
+                f"[{stage}] response not found in cache {self.cache_dir} (replay mode). "
+                "Run once in live mode to record it."
+            )
+        if self.backend is None:
+            raise LLMError("No model backend configured")
+
+        if isinstance(self.backend, ScriptedBackend):
+            self.backend.stage = stage
+        text, usage = self._call_with_retry(system, prompt, temperature, seed, json_mode, stage)
+        served = usage.pop("model", self.model)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            json.dumps(
+                {
+                    "stage": stage,
+                    "model": self.model,
+                    "served_by": served,
+                    "temperature": temperature,
+                    "seed": seed,
+                    "variant": variant,
+                    "usage": usage,
+                    "response": text,
+                },
+                ensure_ascii=False,
+                indent=1,
+            ),
+            encoding="utf-8",
+        )
+        return text
+
+    def complete_json(self, system: str, prompt: str, *, stage: str, **kw) -> dict:
+        """Ask for JSON; if the answer does not parse, ask again with the parse error."""
+        last_error = ""
+        base_variant = kw.pop("variant", 0)
+        for attempt in range(3):
+            p = prompt if not last_error else (
+                f"{prompt}\n\nYour previous answer was not valid JSON ({last_error}). "
+                "Reply again with only the JSON object."
+            )
+            raw = self.complete(system, p, stage=stage, json_mode=True, variant=base_variant + attempt, **kw)
+            try:
+                return parse_json(raw)
+            except ValueError as exc:
+                last_error = str(exc)[:200]
+                self._log(f"  [{stage}] JSON parse failed (attempt {attempt + 1}): {last_error}")
+        raise LLMError(f"[{stage}] model did not return valid JSON after 3 attempts")
+
+    def _call_with_retry(self, system, prompt, temperature, seed, json_mode, stage):
+        """Retry transient errors. When a model is overloaded (503) rotate through the fallback
+        models; when every model is overloaded, wait and go round again, up to max_wait seconds."""
+        models = [self.model] + self.fallbacks
+        current, errors, waited = 0, 0, 0.0
+        overloaded_in_round: set[str] = set()
+        pause = 20.0
+        while True:
+            model = models[current]
+            start = time.time()
+            try:
+                text, usage = self.backend.generate(
+                    system, prompt, temperature=temperature, seed=seed, json_mode=json_mode, model=model,
+                )
+                self.usage.calls += 1
+                self.usage.seconds += time.time() - start
+                self.usage.prompt_tokens += usage.get("prompt_tokens", 0)
+                self.usage.output_tokens += usage.get("output_tokens", 0)
+                self.usage.by_model[model] = self.usage.by_model.get(model, 0) + 1
+                usage["model"] = model
+                return text, usage
+            except LLMError:
+                raise
+            except Exception as exc:  # network errors, rate limits, overload, 5xx
+                msg = str(exc)
+                if is_overloaded(msg):
+                    overloaded_in_round.add(model)
+                    if len(overloaded_in_round) < len(models):
+                        current = (current + 1) % len(models)
+                        self._log(f"  [{stage}] {model} is overloaded; trying {models[current]}")
+                        continue
+                    if waited >= self.max_wait:
+                        raise LLMError(f"[{stage}] every model stayed overloaded for {waited:.0f}s") from exc
+                    self._log(f"  [{stage}] all {len(models)} models overloaded; waiting {pause:.0f}s "
+                              f"(waited {waited:.0f}s of {self.max_wait:.0f}s)")
+                    time.sleep(pause)
+                    waited += pause
+                    pause = min(pause * 1.5, 120.0)
+                    overloaded_in_round.clear()
+                    current = 0
+                    continue
+                errors += 1
+                if errors >= 6:
+                    raise LLMError(f"[{stage}] model call failed: {msg[:300]}") from exc
+                delay = 30.0 if ("429" in msg or "RESOURCE_EXHAUSTED" in msg) else 5.0 * errors
+                self._log(f"  [{stage}] {model} failed ({msg[:120]}); retrying in {delay:.0f}s")
+                time.sleep(delay)
+        raise AssertionError("unreachable")
+
+
+def is_overloaded(msg: str) -> bool:
+    return any(k in msg for k in ("503", "UNAVAILABLE", "overloaded", "high demand"))
+
+
+_FENCE = re.compile(r"```(?:json)?\s*(.*?)```", re.S)
+
+
+def parse_json(raw: str) -> dict:
+    text = raw.strip()
+    m = _FENCE.search(text)
+    if m and not text.startswith("{"):
+        text = m.group(1).strip()
+    try:
+        data = json.loads(text, strict=False)   # tolerate raw newlines inside strings
+    except json.JSONDecodeError:
+        start, end = text.find("{"), text.rfind("}")
+        if start == -1 or end <= start:
+            raise ValueError("no JSON object found")
+        try:
+            data = json.loads(text[start : end + 1], strict=False)
+        except json.JSONDecodeError as exc:
+            raise ValueError(str(exc)) from exc
+    if not isinstance(data, dict):
+        raise ValueError("expected a JSON object")
+    return data
+
+
+def build_llm(cfg, log=None) -> LLM:
+    """Create the LLM client described by the [llm] config section."""
+    backend = None
+    if cfg.llm.mode == "live":
+        if cfg.llm.provider != "gemini":
+            raise LLMError(f"Unsupported provider {cfg.llm.provider!r}")
+        backend = GeminiBackend(cfg.llm.model, send_temperature=cfg.llm.send_temperature)
+    return LLM(
+        backend,
+        model=cfg.llm.model,
+        cache_dir=cfg.path(cfg.llm.cache_dir),
+        temperature=cfg.llm.temperature,
+        seed=cfg.llm.seed,
+        mode=cfg.llm.mode,
+        log=log,
+        fallbacks=cfg.llm.fallback_models,
+        max_wait=cfg.llm.max_wait_sec,
+    )

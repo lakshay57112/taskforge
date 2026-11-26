@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# scratch space: repo clone, worktrees, test virtualenv
+.taskforge_work/
+
+# raw Harbor trial output is large; keep the scorecard and the task packages
+output/*/harbor-jobs/
+
+.env
+
+# local end-to-end test output
+e2e/

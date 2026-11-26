@@ -1,0 +1,56 @@
+# TaskForge run configuration.
+# Every value here can be overridden from the command line (see `taskforge run --help`).
+
+[repo]
+name = "pallets/click"
+url = "https://github.com/pallets/click.git"
+# Release 8.5.1. The full 40-character hash is what gets recorded in every task.toml.
+base_commit = "cf19179e8e2fd54c601378cec9e0d21bb12b6fb1"
+base_ref = "8.5.1"
+license = "BSD-3-Clause"
+language = "python"
+source_dir = "src/click"
+tests_dir = "tests"
+# Always given to the model as context, because new public API has to be exported here.
+always_include = ["src/click/__init__.py"]
+
+[environment]
+base_image = "python:3.12-slim"
+pytest_version = "9.2.0"
+agent_timeout_sec = 1800
+verifier_timeout_sec = 900
+build_timeout_sec = 900
+cpus = 2
+memory_mb = 4096
+
+[llm]
+provider = "gemini"
+# Run `taskforge models` to see what your key can use, then change this if needed.
+model = "gemini-3.8-flash"
+# Tried in turn when a model is overloaded (HTTP 503). `taskforge ping` shows which respond now.
+fallback_models = ["gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-2.5-flash", "gemini-2.5-pro"]
+# When every model is overloaded, keep waiting and retrying for up to this long per request.
+max_wait_sec = 1200
+# Gemini 3 models are tuned for their default sampling, so temperatures are only sent
+# when send_temperature = true. The seed is always sent.
+temperature = 1.0
+send_temperature = false
+seed = 1234
+# "live" calls the API and caches every answer, "replay" only reads the cache (no API key needed).
+mode = "live"
+cache_dir = ".taskforge_cache"
+
+[pipeline]
+num_tasks = 5
+# Candidates proposed per task slot; spares are used when a candidate fails validation.
+candidates_per_task = 2
+max_fix_rounds = 4
+breaker_cheats = 3
+harden_rounds = 2
+mutants = 12
+blind_solvers = 2
+harbor_oracle_runs = 3
+# Scratch space (repo clone, worktrees, test virtualenv). On Windows + WSL keep this on the
+# Linux filesystem (e.g. "~/.taskforge_work"): running tests on /mnt/c is much slower.
+workdir = ".taskforge_work"
+output_dir = "output"

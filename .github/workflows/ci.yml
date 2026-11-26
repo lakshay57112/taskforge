@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install -e ".[harbor,dev]"
+
+      - name: Unit tests
+        run: pytest -q tests/test_units.py
+
+      - name: End-to-end factory run (scripted model, no API key)
+        env:
+          TASKFORGE_E2E: "1"
+          TASKFORGE_E2E_ROOT: e2e
+        run: pytest -q tests/test_end_to_end.py
+
+      - name: Harbor validation matrix in Docker (nop = 0.0, oracle = 1.0)
+        run: |
+          taskforge validate --oracle-runs 2 "e2e/output/click@cf19179/tasks/click-duration-type"
+
+      - name: Upload generated task and Harbor logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-task-and-harbor-logs
+          path: |
+            e2e/output
+            output/*/harbor-jobs
+          if-no-files-found: ignore

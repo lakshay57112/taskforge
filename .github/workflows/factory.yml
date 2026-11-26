@@ -1,0 +1,48 @@
+name: Run the factory
+
+# Manual run of the full pipeline on a Linux runner with Docker, including Harbor validation.
+# Needs a repository secret named GEMINI_API_KEY (Settings > Secrets and variables > Actions).
+
+on:
+  workflow_dispatch:
+    inputs:
+      tasks:
+        description: "Number of tasks to build"
+        default: "5"
+      model:
+        description: "Gemini model"
+        default: "gemini-3.8-flash"
+
+jobs:
+  factory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install -e ".[harbor,dev]"
+
+      - name: Check which models answer
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: taskforge ping || true
+
+      - name: Run TaskForge
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: taskforge run --tasks "${{ inputs.tasks }}" --model "${{ inputs.model }}"
+
+      - name: Upload task packages, report and model cache
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: taskforge-output
+          path: |
+            output
+            .taskforge_cache
+          if-no-files-found: ignore
