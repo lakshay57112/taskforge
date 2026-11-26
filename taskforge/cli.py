@@ -11,9 +11,19 @@ from .config import load_config
 
 
 def _cfg(args):
+    from .llm import PROVIDER_PRESETS
+
     cfg = load_config(args.config)
     if getattr(args, "replay", False):
         cfg.llm.mode = "replay"
+    provider = getattr(args, "provider", None)
+    if provider and provider != cfg.llm.provider:
+        cfg.llm.provider = provider
+        cfg.llm.base_url = cfg.llm.api_key_env = ""
+        # the Gemini model list means nothing to another provider
+        cfg.llm.fallback_models = []
+        if provider in PROVIDER_PRESETS:
+            cfg.llm.model = PROVIDER_PRESETS[provider][2]
     if getattr(args, "model", None):
         cfg.llm.model = args.model
     return cfg
@@ -102,9 +112,9 @@ def cmd_codemap(args) -> int:
 
 
 def cmd_models(args) -> int:
-    from .llm import GeminiBackend
+    from .llm import make_backend
 
-    for name in GeminiBackend("unused").list_models():
+    for name in make_backend(_cfg(args)).list_models():
         print(name)
     return 0
 
@@ -113,11 +123,11 @@ def cmd_ping(args) -> int:
     """Send a tiny request to each model and report which ones answer right now."""
     import time as _time
 
-    from .llm import GeminiBackend, classify_error
+    from .llm import classify_error, make_backend
 
     cfg = _cfg(args)
     models = args.models or [cfg.llm.model] + list(cfg.llm.fallback_models)
-    backend = GeminiBackend(cfg.llm.model)
+    backend = make_backend(cfg)
     working = []
     for m in models:
         start = _time.time()
@@ -152,6 +162,7 @@ def main(argv: list[str] | None = None) -> int:
     r.add_argument("--tasks", type=int, help="number of tasks to build (default from config)")
     r.add_argument("--replay", action="store_true", help="use only recorded model answers (no API key)")
     r.add_argument("--model", help="override the model name")
+    r.add_argument("--provider", help="gemini (default), openrouter, groq, ollama")
     r.add_argument("--skip-harbor", action="store_true", help="skip the Docker/Harbor validation")
     r.add_argument("--skip-breaker", action="store_true")
     r.add_argument("--skip-blind", action="store_true")
@@ -168,10 +179,13 @@ def main(argv: list[str] | None = None) -> int:
     c.set_defaults(func=cmd_check)
 
     sub.add_parser("codemap", help="print the codebase map").set_defaults(func=cmd_codemap)
-    sub.add_parser("models", help="list Gemini models available to your key").set_defaults(func=cmd_models)
+    m = sub.add_parser("models", help="list the models your key can use")
+    m.add_argument("--provider")
+    m.set_defaults(func=cmd_models)
     sub.add_parser("report", help="rebuild the scorecard from task folders").set_defaults(func=cmd_report)
     pg = sub.add_parser("ping", help="check which Gemini models are answering right now")
     pg.add_argument("models", nargs="*", help="models to try (default: model + fallback_models)")
+    pg.add_argument("--provider")
     pg.set_defaults(func=cmd_ping)
 
     args = ap.parse_args(argv)

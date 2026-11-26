@@ -133,6 +133,11 @@ with their default sampling (`send_temperature = false`); variety between blind 
 different seeds. JSON mode is used for structured stages; code is exchanged as edit blocks or a
 single fenced test file.
 
+The model layer is provider-agnostic: besides the Gemini SDK, any OpenAI-compatible endpoint
+(OpenRouter, Groq, a local Ollama server) can be selected with `--provider`. When a model is
+overloaded (503) or out of quota (429) the client moves to the next configured model; models the
+key cannot use (404/403) are dropped for the rest of the run.
+
 ## 8. Assumptions and limitations
 
 - **Shared verifier.** The verifier runs in the agent's container (the standard SWE-bench layout).
@@ -153,6 +158,6 @@ click's own test suite and `CliRunner`, and the `google-genai` SDK.
 
 ## 10. Tools and models used
 
-- **Pipeline runtime model:** Google Gemini via the Gemini API (model recorded in every `task.toml`
-  and in `reports/scorecard.json`).
+- **Pipeline runtime model:** Google Gemini via the Gemini API by default; the model and provider
+  actually used are recorded in every `task.toml` and in `reports/scorecard.json`.
 - **Execution:** Harbor 0.25.0, Docker, pytest 9.2.0, Python 3.12.

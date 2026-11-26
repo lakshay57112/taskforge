@@ -236,3 +236,25 @@ def test_classify_error():
     assert classify_error("429 RESOURCE_EXHAUSTED") == "quota"
     assert classify_error("404 NOT_FOUND") == "unusable"
     assert classify_error("connection reset") == "other"
+
+
+def test_openai_compatible_backend(monkeypatch):
+    import httpx
+    from taskforge.llm import OpenAICompatBackend
+
+    seen = {}
+
+    def handler(request):
+        seen["url"] = str(request.url)
+        seen["auth"] = request.headers.get("authorization")
+        body = json.loads(request.content)
+        seen["model"] = body["model"]
+        return httpx.Response(200, json={"choices": [{"message": {"content": "hi"}}],
+                                         "usage": {"prompt_tokens": 3, "completion_tokens": 1}})
+
+    monkeypatch.setenv("TEST_KEY", "abc")
+    b = OpenAICompatBackend("m1", "https://example.test/v1", "TEST_KEY")
+    b._http = httpx.Client(transport=httpx.MockTransport(handler), headers=b._http.headers)
+    text, usage = b.generate("sys", "p", temperature=1, seed=1, json_mode=True, model="m2")
+    assert text == "hi" and usage == {"prompt_tokens": 3, "output_tokens": 1}
+    assert seen == {"url": "https://example.test/v1/chat/completions", "auth": "Bearer abc", "model": "m2"}

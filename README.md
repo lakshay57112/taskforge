@@ -73,6 +73,23 @@ Outputs land in `output/click@cf19179/`:
 | `logs/events.jsonl` | every repair, failure and build event |
 | `harbor-jobs/` | raw Harbor trial output (logs, rewards) |
 
+## Model providers
+
+Gemini is the default. Any OpenAI-compatible provider works too:
+
+| Provider | Flag | Key variable | Default model |
+|---|---|---|---|
+| Google Gemini | `--provider gemini` | `GEMINI_API_KEY` | `gemini-3.8-flash` (+ fallbacks) |
+| OpenRouter | `--provider openrouter` | `OPENROUTER_API_KEY` | `openrouter/free` |
+| Groq | `--provider groq` | `GROQ_API_KEY` | `openai/gpt-oss-120b` |
+| Ollama (local) | `--provider ollama` | none | `qwen2.5-coder:14b` |
+| Anything else | `provider = "openai"` + `base_url` + `api_key_env` in `taskforge.toml` | | |
+
+```bash
+taskforge ping --provider openrouter          # which models answer right now
+taskforge run --provider openrouter --tasks 1
+```
+
 ## Commands
 
 | Command | Purpose |

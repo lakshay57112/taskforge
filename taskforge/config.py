@@ -43,6 +43,8 @@ class EnvironmentConfig:
 @dataclass
 class LLMConfig:
     provider: str = "gemini"
+    base_url: str = ""
+    api_key_env: str = ""
     model: str = "gemini-3.8-flash"
     fallback_models: list[str] = field(default_factory=list)
     max_wait_sec: float = 1200.0

@@ -1,7 +1,8 @@
 name: Run the factory
 
 # Manual run of the full pipeline on a Linux runner with Docker, including Harbor validation.
-# Needs a repository secret named GEMINI_API_KEY (Settings > Secrets and variables > Actions).
+# Add the key for your provider as a repository secret (Settings > Secrets and variables > Actions):
+#   gemini -> GEMINI_API_KEY, openrouter -> OPENROUTER_API_KEY, groq -> GROQ_API_KEY
 
 on:
   workflow_dispatch:
@@ -9,42 +10,58 @@ on:
       tasks:
         description: "Number of tasks to build"
         default: "5"
+      provider:
+        description: "gemini, openrouter or groq"
+        default: "gemini"
       model:
-        description: "Gemini model"
-        default: "gemini-3.8-flash"
+        description: "Model name (leave empty for the provider's default)"
+        default: ""
 
 jobs:
   factory:
     runs-on: ubuntu-latest
     timeout-minutes: 340
+    env:
+      TASKS: ${{ inputs.tasks }}
+      PROVIDER: ${{ inputs.provider }}
+      MODEL: ${{ inputs.model }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check the API key secret
+        run: |
+          case "$PROVIDER" in
+            gemini) KEY_NAME=GEMINI_API_KEY ;;
+            openrouter) KEY_NAME=OPENROUTER_API_KEY ;;
+            groq) KEY_NAME=GROQ_API_KEY ;;
+            *) echo "::error::Unknown provider '$PROVIDER' (use gemini, openrouter or groq)"; exit 1 ;;
+          esac
+          if [ -z "${!KEY_NAME}" ]; then
+            echo "::error::No $KEY_NAME secret. Add it under Settings > Secrets and variables > Actions > Secrets > New repository secret."
+            exit 1
+          fi
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Check the API key secret
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: |
-          if [ -z "$GEMINI_API_KEY" ]; then
-            echo "::error::No GEMINI_API_KEY secret. Add it under Settings > Secrets and variables > Actions > Secrets > New repository secret."
-            exit 1
-          fi
-
       - name: Install
         run: pip install -e ".[harbor,dev]"
 
       - name: Check which models answer
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: taskforge ping || true
+        run: |
+          ARGS=(--provider "$PROVIDER")
+          if [ -n "$MODEL" ]; then ARGS+=("$MODEL"); fi
+          taskforge ping "${ARGS[@]}" || true
 
       - name: Run TaskForge
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: taskforge run --tasks "${{ inputs.tasks }}" --model "${{ inputs.model }}"
+        run: |
+          ARGS=(--tasks "$TASKS" --provider "$PROVIDER")
+          if [ -n "$MODEL" ]; then ARGS+=(--model "$MODEL"); fi
+          taskforge run "${ARGS[@]}"
 
       - name: Upload task packages, report and model cache
         if: always()

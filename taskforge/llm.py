@@ -107,6 +107,60 @@ class GeminiBackend:
         return sorted(m.name for m in self._client.models.list())
 
 
+PROVIDER_PRESETS = {
+    # name: (base_url, environment variable holding the key, default model)
+    "openrouter": ("https://openrouter.ai/api/v1", "OPENROUTER_API_KEY", "openrouter/free"),
+    "groq": ("https://api.groq.com/openai/v1", "GROQ_API_KEY", "openai/gpt-oss-120b"),
+    "ollama": ("http://localhost:11434/v1", "", "qwen2.5-coder:14b"),
+}
+
+
+class OpenAICompatBackend:
+    """Any provider that speaks the OpenAI chat-completions API (OpenRouter, Groq, Ollama, ...)."""
+
+    def __init__(self, model: str, base_url: str, api_key_env: str = "", send_temperature: bool = False):
+        import httpx
+
+        self.model = model
+        self.base_url = base_url.rstrip("/")
+        self.send_temperature = send_temperature
+        key = os.environ.get(api_key_env, "") if api_key_env else ""
+        if api_key_env and not key:
+            raise LLMError(f"Set {api_key_env} before running with this provider.")
+        headers = {"Content-Type": "application/json"}
+        if key:
+            headers["Authorization"] = f"Bearer {key}"
+        if "openrouter.ai" in self.base_url:
+            headers["X-Title"] = "TaskForge"
+        self._http = httpx.Client(headers=headers, timeout=900.0)
+
+    def generate(self, system, prompt, *, temperature, seed, json_mode, model=None):
+        body = {
+            "model": model or self.model,
+            "messages": [{"role": "system", "content": system}, {"role": "user", "content": prompt}],
+            "seed": seed,
+        }
+        if self.send_temperature:
+            body["temperature"] = temperature
+        resp = self._http.post(f"{self.base_url}/chat/completions", json=body)
+        if resp.status_code >= 400:
+            raise RuntimeError(f"{resp.status_code} {resp.text[:400]}")
+        data = resp.json()
+        if data.get("error"):
+            raise RuntimeError(f"{data['error'].get('code', '')} {data['error'].get('message', '')}")
+        text = (data.get("choices") or [{}])[0].get("message", {}).get("content") or ""
+        if not text.strip():
+            raise RuntimeError("503 empty response from provider")
+        usage = data.get("usage") or {}
+        return text, {"prompt_tokens": usage.get("prompt_tokens", 0),
+                      "output_tokens": usage.get("completion_tokens", 0)}
+
+    def list_models(self) -> list[str]:
+        resp = self._http.get(f"{self.base_url}/models")
+        resp.raise_for_status()
+        return sorted(m["id"] for m in resp.json().get("data", []))
+
+
 class ScriptedBackend:
     """Deterministic backend for tests: a function maps (stage, prompt) to a reply."""
 
@@ -360,13 +414,28 @@ def parse_json(raw: str) -> dict:
     return data
 
 
+def make_backend(cfg):
+    """The model client for cfg.llm.provider: "gemini", a preset name, or "openai" with base_url."""
+    provider = cfg.llm.provider
+    if provider == "gemini":
+        return GeminiBackend(cfg.llm.model, send_temperature=cfg.llm.send_temperature)
+    if provider in PROVIDER_PRESETS:
+        base_url, key_env, _ = PROVIDER_PRESETS[provider]
+        return OpenAICompatBackend(cfg.llm.model, cfg.llm.base_url or base_url,
+                                   cfg.llm.api_key_env or key_env, cfg.llm.send_temperature)
+    if provider == "openai":
+        if not cfg.llm.base_url:
+            raise LLMError("provider 'openai' needs llm.base_url")
+        return OpenAICompatBackend(cfg.llm.model, cfg.llm.base_url, cfg.llm.api_key_env,
+                                   cfg.llm.send_temperature)
+    raise LLMError(f"Unknown provider {provider!r} (use gemini, openrouter, groq, ollama or openai)")
+
+
 def build_llm(cfg, log=None) -> LLM:
     """Create the LLM client described by the [llm] config section."""
     backend = None
     if cfg.llm.mode == "live":
-        if cfg.llm.provider != "gemini":
-            raise LLMError(f"Unsupported provider {cfg.llm.provider!r}")
-        backend = GeminiBackend(cfg.llm.model, send_temperature=cfg.llm.send_temperature)
+        backend = make_backend(cfg)
     return LLM(
         backend,
         model=cfg.llm.model,

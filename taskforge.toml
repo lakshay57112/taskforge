@@ -24,6 +24,9 @@ cpus = 2
 memory_mb = 4096
 
 [llm]
+# "gemini" (GEMINI_API_KEY), or an OpenAI-compatible provider: "openrouter" (OPENROUTER_API_KEY),
+# "groq" (GROQ_API_KEY), "ollama" (local, no key), or "openai" with base_url + api_key_env.
+# Switch from the command line with --provider; that also picks a default model for it.
 provider = "gemini"
 # Run `taskforge models` to see what your key can use, then change this if needed.
 model = "gemini-3.8-flash"
