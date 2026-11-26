@@ -78,15 +78,21 @@ class GeminiBackend:
 
     def generate(self, system, prompt, *, temperature, seed, json_mode, model=None):
         types = self._types
-        config = types.GenerateContentConfig(
-            system_instruction=system,
-            temperature=temperature if self.send_temperature else None,
-            seed=seed,
-            response_mime_type="application/json" if json_mode else "text/plain",
-        )
-        resp = self._client.models.generate_content(
-            model=model or self.model, contents=prompt, config=config
-        )
+        model = model or self.model
+        if model.startswith("gemma"):
+            # Gemma models on the Gemini API take no system instruction or JSON mode.
+            config = types.GenerateContentConfig(
+                temperature=temperature if self.send_temperature else None, seed=seed)
+            contents = f"{system}\n\n{prompt}"
+        else:
+            config = types.GenerateContentConfig(
+                system_instruction=system,
+                temperature=temperature if self.send_temperature else None,
+                seed=seed,
+                response_mime_type="application/json" if json_mode else "text/plain",
+            )
+            contents = prompt
+        resp = self._client.models.generate_content(model=model, contents=contents, config=config)
         text = resp.text or ""
         meta = getattr(resp, "usage_metadata", None)
         usage = {
@@ -130,6 +136,7 @@ class LLM:
         self.backend = backend
         self.model = model
         self.max_wait = max_wait
+        self.disabled: set[str] = set()
         self.fallbacks = [m for m in fallbacks if m and m != model]
         self.cache_dir = Path(cache_dir) / "llm"
         self.temperature = temperature
@@ -253,14 +260,29 @@ class LLM:
         raise LLMError(f"[{stage}] model did not return valid JSON after 3 attempts")
 
     def _call_with_retry(self, system, prompt, temperature, seed, json_mode, stage):
-        """Retry transient errors. When a model is overloaded (503) rotate through the fallback
-        models; when every model is overloaded, wait and go round again, up to max_wait seconds."""
-        models = [self.model] + self.fallbacks
-        current, errors, waited = 0, 0, 0.0
-        overloaded_in_round: set[str] = set()
-        pause = 20.0
+        """Retry transient errors and route around unavailable models.
+
+        - model missing or not allowed for this key (404/403): dropped for the rest of the run
+        - overloaded (503) or out of quota (429): try the next model straight away
+        - every remaining model busy: wait and go round again, up to max_wait seconds
+        """
+        errors, waited, pause = 0, 0.0, 20.0
+        busy: set[str] = set()
         while True:
-            model = models[current]
+            models = [m for m in [self.model] + self.fallbacks if m not in self.disabled]
+            if not models:
+                raise LLMError(f"[{stage}] none of the configured models can be used with this API key")
+            model = next((m for m in models if m not in busy), None)
+            if model is None:
+                if waited >= self.max_wait:
+                    raise LLMError(f"[{stage}] every model stayed busy or out of quota for {waited:.0f}s")
+                self._log(f"  [{stage}] all {len(models)} models busy or out of quota; waiting {pause:.0f}s "
+                          f"(waited {waited:.0f}s of {self.max_wait:.0f}s)")
+                time.sleep(pause)
+                waited += pause
+                pause = min(pause * 1.5, 120.0)
+                busy.clear()
+                continue
             start = time.time()
             try:
                 text, usage = self.backend.generate(
@@ -277,33 +299,42 @@ class LLM:
                 raise
             except Exception as exc:  # network errors, rate limits, overload, 5xx
                 msg = str(exc)
-                if is_overloaded(msg):
-                    overloaded_in_round.add(model)
-                    if len(overloaded_in_round) < len(models):
-                        current = (current + 1) % len(models)
-                        self._log(f"  [{stage}] {model} is overloaded; trying {models[current]}")
-                        continue
-                    if waited >= self.max_wait:
-                        raise LLMError(f"[{stage}] every model stayed overloaded for {waited:.0f}s") from exc
-                    self._log(f"  [{stage}] all {len(models)} models overloaded; waiting {pause:.0f}s "
-                              f"(waited {waited:.0f}s of {self.max_wait:.0f}s)")
-                    time.sleep(pause)
-                    waited += pause
-                    pause = min(pause * 1.5, 120.0)
-                    overloaded_in_round.clear()
-                    current = 0
+                kind = classify_error(msg)
+                if kind == "unusable":
+                    self.disabled.add(model)
+                    self._log(f"  [{stage}] {model} is not available to this key; dropping it ({msg[:80]})")
+                    continue
+                if kind in ("busy", "quota"):
+                    busy.add(model)
+                    label = "overloaded" if kind == "busy" else "out of quota"
+                    nxt = next((m for m in models if m not in busy), None)
+                    if nxt:
+                        self._log(f"  [{stage}] {model} is {label}; trying {nxt}")
                     continue
                 errors += 1
                 if errors >= 6:
                     raise LLMError(f"[{stage}] model call failed: {msg[:300]}") from exc
-                delay = 30.0 if ("429" in msg or "RESOURCE_EXHAUSTED" in msg) else 5.0 * errors
+                delay = 5.0 * errors
                 self._log(f"  [{stage}] {model} failed ({msg[:120]}); retrying in {delay:.0f}s")
                 time.sleep(delay)
         raise AssertionError("unreachable")
 
 
+def classify_error(msg: str) -> str:
+    """'busy' (overloaded), 'quota' (rate or quota limit), 'unusable' (model not available to
+    this key) or 'other'."""
+    if any(k in msg for k in ("404", "NOT_FOUND", "no longer available", "403", "PERMISSION_DENIED",
+                              "is not supported", "not enabled for")):
+        return "unusable"
+    if any(k in msg for k in ("429", "RESOURCE_EXHAUSTED", "quota")):
+        return "quota"
+    if any(k in msg for k in ("503", "UNAVAILABLE", "overloaded", "high demand")):
+        return "busy"
+    return "other"
+
+
 def is_overloaded(msg: str) -> bool:
-    return any(k in msg for k in ("503", "UNAVAILABLE", "overloaded", "high demand"))
+    return classify_error(msg) == "busy"
 
 
 _FENCE = re.compile(r"```(?:json)?\s*(.*?)```", re.S)

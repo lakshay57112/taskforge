@@ -205,3 +205,34 @@ def test_all_models_overloaded_waits_then_recovers(tmp_path):
     llm2 = LLM(Busy(), model="a", cache_dir=tmp_path / "2", fallbacks=["b"], max_wait=0)
     with pytest.raises(mod.LLMError):
         llm2.complete("s", "p2", stage="x")
+
+
+def test_unusable_models_are_dropped_and_quota_rotates(tmp_path):
+    import taskforge.llm as mod
+    mod.time.sleep = lambda s: None
+    seen = []
+
+    class Mixed:
+        model = "a"
+        def generate(self, system, prompt, *, temperature, seed, json_mode, model=None):
+            seen.append(model)
+            if model == "a":
+                raise RuntimeError("404 NOT_FOUND: no longer available to new users")
+            if model == "b":
+                raise RuntimeError("429 RESOURCE_EXHAUSTED: You exceeded your current quota")
+            return "ok", {}
+
+    llm = LLM(Mixed(), model="a", cache_dir=tmp_path, fallbacks=["b", "c"])
+    assert llm.complete("s", "p", stage="x") == "ok"
+    assert seen == ["a", "b", "c"] and llm.disabled == {"a"}
+    seen.clear()
+    assert llm.complete("s", "p2", stage="x") == "ok"
+    assert seen == ["b", "c"]          # the dropped model is not tried again
+
+
+def test_classify_error():
+    from taskforge.llm import classify_error
+    assert classify_error("503 UNAVAILABLE high demand") == "busy"
+    assert classify_error("429 RESOURCE_EXHAUSTED") == "quota"
+    assert classify_error("404 NOT_FOUND") == "unusable"
+    assert classify_error("connection reset") == "other"

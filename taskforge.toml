@@ -28,7 +28,7 @@ provider = "gemini"
 # Run `taskforge models` to see what your key can use, then change this if needed.
 model = "gemini-3.8-flash"
 # Tried in turn when a model is overloaded (HTTP 503). `taskforge ping` shows which respond now.
-fallback_models = ["gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-2.5-flash", "gemini-2.5-pro"]
+fallback_models = ["gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite", "gemma-4-31b-it"]
 # When every model is overloaded, keep waiting and retrying for up to this long per request.
 max_wait_sec = 1200
 # Gemini 3 models are tuned for their default sampling, so temperatures are only sent

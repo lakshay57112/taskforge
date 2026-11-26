@@ -113,7 +113,7 @@ def cmd_ping(args) -> int:
     """Send a tiny request to each model and report which ones answer right now."""
     import time as _time
 
-    from .llm import GeminiBackend, is_overloaded
+    from .llm import GeminiBackend, classify_error
 
     cfg = _cfg(args)
     models = args.models or [cfg.llm.model] + list(cfg.llm.fallback_models)
@@ -124,11 +124,12 @@ def cmd_ping(args) -> int:
         try:
             text, _ = backend.generate("Reply with the single word OK.", "ping", temperature=1.0,
                                        seed=1, json_mode=False, model=m)
-            print(f"  OK        {m:<24} {(_time.time() - start):5.1f}s")
+            print(f"  OK         {m:<24} {(_time.time() - start):5.1f}s")
             working.append(m)
         except Exception as exc:  # report every failure kind
-            kind = "BUSY" if is_overloaded(str(exc)) else "ERROR"
-            print(f"  {kind:<9} {m:<24} {str(exc)[:90]}")
+            kind = {"busy": "BUSY", "quota": "NO QUOTA", "unusable": "NO ACCESS"}.get(
+                classify_error(str(exc)), "ERROR")
+            print(f"  {kind:<10} {m:<24} {str(exc)[:80]}")
     if working:
         print(f"\nUse one with: taskforge run --model {working[0]}")
     return 0 if working else 1
