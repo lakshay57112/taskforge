@@ -5,7 +5,7 @@ name: Run the factory
 # `factory-run.env` file (TASKS=, PROVIDER=, MODEL=).
 # Add the key for your provider as a repository secret (Settings > Secrets and variables > Actions):
 #   gemini -> GEMINI_API_KEY, openrouter -> OPENROUTER_API_KEY, groq -> GROQ_API_KEY
-# Results are saved to the `factory-output` branch and attached to the run as an artifact.
+# Results are saved to the `factory-output/<run id>` branch and attached to the run as an artifact.
 
 on:
   workflow_dispatch:
@@ -79,23 +79,23 @@ jobs:
           ( while sleep 300; do
               mkdir -p "$SNAP/output"; rsync -a --delete --exclude harbor-jobs output/ "$SNAP/output/" 2>/dev/null
               cp factory.log "$SNAP/" 2>/dev/null
-              ( cd "$SNAP" && git add -f factory.log output && git commit -q -m "Factory run ${{ github.run_id }}: in progress" && git push -q -f origin HEAD:factory-output ) >/dev/null 2>&1
+              ( cd "$SNAP" && git add -f factory.log output && git commit -q -m "Factory run ${{ github.run_id }}: in progress" && git push -q -f origin HEAD:refs/heads/factory-output/${{ github.run_id }} ) >/dev/null 2>&1
             done ) &
           ARGS=(--tasks "$TASKS" --provider "$PROVIDER")
           if [ -n "$MODEL" ]; then ARGS+=(--model "$MODEL"); fi
           taskforge run "${ARGS[@]}" 2>&1 | tee factory.log
           exit "${PIPESTATUS[0]}"
 
-      - name: Save results to the factory-output branch
+      - name: Save results to a factory-output branch
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -B factory-output
+          git checkout -B "factory-output/${{ github.run_id }}"
           for p in factory.log .taskforge_cache output; do [ -e "$p" ] && git add -f "$p"; done
           git reset -q -- 'output/*/harbor-jobs' 2>/dev/null || true
           git commit -q -m "Factory run ${{ github.run_id }} ($PROVIDER, $TASKS tasks)" || exit 0
-          git push -f origin factory-output
+          git push -f origin "factory-output/${{ github.run_id }}"
 
       - name: Upload task packages, report and model cache
         if: always()
