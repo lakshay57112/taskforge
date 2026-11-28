@@ -1,8 +1,11 @@
 name: Run the factory
 
-# Manual run of the full pipeline on a Linux runner with Docker, including Harbor validation.
+# Full pipeline on a Linux runner with Docker, including Harbor validation.
+# Start it from the Actions tab (Run workflow), or by pushing to the `factory-run` branch with a
+# `factory-run.env` file (TASKS=, PROVIDER=, MODEL=).
 # Add the key for your provider as a repository secret (Settings > Secrets and variables > Actions):
 #   gemini -> GEMINI_API_KEY, openrouter -> OPENROUTER_API_KEY, groq -> GROQ_API_KEY
+# Results are saved to the `factory-output` branch and attached to the run as an artifact.
 
 on:
   workflow_dispatch:
@@ -16,20 +19,29 @@ on:
       model:
         description: "Model name (leave empty for the provider's default)"
         default: ""
+  push:
+    branches: [factory-run]
+
+permissions:
+  contents: write
 
 jobs:
   factory:
     runs-on: ubuntu-latest
     timeout-minutes: 340
     env:
-      TASKS: ${{ inputs.tasks }}
-      PROVIDER: ${{ inputs.provider }}
+      TASKS: ${{ inputs.tasks || '3' }}
+      PROVIDER: ${{ inputs.provider || 'gemini' }}
       MODEL: ${{ inputs.model }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Read run settings (push trigger)
+        if: github.event_name == 'push' && hashFiles('factory-run.env') != ''
+        run: grep -E '^(TASKS|PROVIDER|MODEL)=' factory-run.env >> "$GITHUB_ENV"
 
       - name: Check the API key secret
         run: |
@@ -43,6 +55,7 @@ jobs:
             echo "::error::No $KEY_NAME secret. Add it under Settings > Secrets and variables > Actions > Secrets > New repository secret."
             exit 1
           fi
+          echo "provider=$PROVIDER tasks=$TASKS model=${MODEL:-default}"
 
       - uses: actions/setup-python@v5
         with:
@@ -61,7 +74,19 @@ jobs:
         run: |
           ARGS=(--tasks "$TASKS" --provider "$PROVIDER")
           if [ -n "$MODEL" ]; then ARGS+=(--model "$MODEL"); fi
-          taskforge run "${ARGS[@]}"
+          taskforge run "${ARGS[@]}" 2>&1 | tee factory.log
+          exit "${PIPESTATUS[0]}"
+
+      - name: Save results to the factory-output branch
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B factory-output
+          for p in factory.log .taskforge_cache output; do [ -e "$p" ] && git add -f "$p"; done
+          git reset -q -- 'output/*/harbor-jobs' 2>/dev/null || true
+          git commit -q -m "Factory run ${{ github.run_id }} ($PROVIDER, $TASKS tasks)" || exit 0
+          git push -f origin factory-output
 
       - name: Upload task packages, report and model cache
         if: always()
@@ -71,4 +96,5 @@ jobs:
           path: |
             output
             .taskforge_cache
+            factory.log
           if-no-files-found: ignore
