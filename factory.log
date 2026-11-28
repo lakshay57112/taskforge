@@ -5,3 +5,8 @@
 [13:43:03]   [propose] gemini-3.8-flash is overloaded; trying gemini-3.7-flash
 [13:43:08]   [propose] gemini-3.7-flash is overloaded; trying gemini-3.6-flash
 [13:43:23]   [propose] gemini-3.6-flash is overloaded; trying gemini-3.5-flash
+[13:51:08]   rejected 'deprecated-parameter-support': already exists upstream
+[13:51:08] [1] building 'duration-param-type' (area=types, axis=parsing)
+[13:51:08]   spec: writing instruction.md for 'Duration parameter type for time duration strings'
+[13:51:14]   [spec] gemini-3.8-flash is overloaded; trying gemini-3.7-flash
+[13:51:22]   [spec] gemini-3.7-flash is overloaded; trying gemini-3.6-flash
