@@ -1,0 +1,5442 @@
+{
+ "areas": [
+  {
+   "id": "core.Context",
+   "file": "src/click/core.py",
+   "lines": 745,
+   "summary": "The context is a special internal object that holds state relevant",
+   "symbols": [
+    "__init__",
+    "protected_args",
+    "to_info_dict",
+    "scope",
+    "meta",
+    "make_formatter",
+    "with_resource",
+    "call_on_close",
+    "close",
+    "_close_with_exception_info",
+    "command_path",
+    "find_root",
+    "find_object",
+    "ensure_object",
+    "_default_map_has",
+    "lookup_default",
+    "fail",
+    "abort",
+    "exit",
+    "get_usage",
+    "get_help",
+    "_make_sub_context",
+    "invoke",
+    "forward",
+    "set_parameter_source",
+    "get_parameter_source"
+   ],
+   "tests": [
+    "tests/test_options.py",
+    "tests/test_context.py",
+    "tests/test_info_dict.py"
+   ]
+  },
+  {
+   "id": "core.Command",
+   "file": "src/click/core.py",
+   "lines": 694,
+   "summary": "Commands are the basic building block of command line interfaces in",
+   "symbols": [
+    "__init__",
+    "to_info_dict",
+    "get_usage",
+    "get_params",
+    "format_usage",
+    "collect_usage_pieces",
+    "get_help_option_names",
+    "get_help_option",
+    "make_parser",
+    "get_help",
+    "get_short_help_str",
+    "format_help",
+    "format_help_text",
+    "format_options",
+    "format_arguments",
+    "format_epilog",
+    "make_context",
+    "parse_args",
+    "invoke",
+    "shell_complete",
+    "main",
+    "_main_shell_completion"
+   ],
+   "tests": [
+    "tests/test_shell_completion.py",
+    "tests/test_options.py",
+    "tests/test_custom_classes.py"
+   ]
+  },
+  {
+   "id": "core.Group",
+   "file": "src/click/core.py",
+   "lines": 461,
+   "summary": "A group is a command that nests other commands (or more groups).",
+   "symbols": [
+    "__init__",
+    "to_info_dict",
+    "add_command",
+    "command",
+    "group",
+    "result_callback",
+    "get_command",
+    "list_commands",
+    "collect_usage_pieces",
+    "format_options",
+    "format_commands",
+    "parse_args",
+    "invoke",
+    "resolve_command",
+    "shell_complete"
+   ],
+   "tests": [
+    "tests/test_shell_completion.py",
+    "tests/test_custom_classes.py",
+    "tests/test_commands.py"
+   ]
+  },
+  {
+   "id": "core.Parameter",
+   "file": "src/click/core.py",
+   "lines": 680,
+   "summary": "A parameter to a command comes in two versions: they are either",
+   "symbols": [
+    "__init__",
+    "_hide_unset",
+    "to_info_dict",
+    "_parse_decls",
+    "human_readable_name",
+    "make_metavar",
+    "get_default",
+    "add_to_parser",
+    "consume_value",
+    "type_cast_value",
+    "value_is_missing",
+    "process_value",
+    "resolve_envvar_value",
+    "value_from_envvar",
+    "handle_parse_result",
+    "get_help_record",
+    "get_usage_pieces",
+    "get_error_hint",
+    "shell_complete"
+   ],
+   "tests": [
+    "tests/test_context.py",
+    "tests/test_options.py",
+    "tests/typing/typing_prompt.py"
+   ]
+  },
+  {
+   "id": "core.Option",
+   "file": "src/click/core.py",
+   "lines": 805,
+   "summary": "Options are usually optional values on the command line and",
+   "symbols": [
+    "__init__",
+    "is_bool_flag",
+    "flag_activation_value",
+    "_infer_flag_kind",
+    "_pick_type",
+    "_resolve_lazy_default",
+    "_validate",
+    "to_info_dict",
+    "get_default",
+    "get_error_hint",
+    "_parse_decls",
+    "add_to_parser",
+    "get_help_spec",
+    "get_help_record",
+    "get_help_extra",
+    "prompt_for_value",
+    "resolve_envvar_value",
+    "value_from_envvar",
+    "consume_value",
+    "process_value"
+   ],
+   "tests": [
+    "tests/test_options.py",
+    "tests/test_shell_completion.py",
+    "tests/test_commands.py"
+   ]
+  },
+  {
+   "id": "core",
+   "file": "src/click/core.py",
+   "lines": 3825,
+   "summary": "other parts of core: functions and smaller classes",
+   "symbols": [
+    "batch",
+    "augment_usage_errors",
+    "iter_params_for_processing",
+    "ParameterSource",
+    "CommandCollection",
+    "Argument"
+   ],
+   "tests": [
+    "tests/test_deprecations.py",
+    "tests/test_shell_completion.py",
+    "tests/test_commands.py"
+   ]
+  },
+  {
+   "id": "decorators",
+   "file": "src/click/decorators.py",
+   "lines": 625,
+   "summary": "module decorators",
+   "symbols": [
+    "pass_context",
+    "pass_obj",
+    "make_pass_decorator",
+    "pass_meta_key",
+    "command",
+    "group",
+    "argument",
+    "option",
+    "confirmation_option",
+    "password_option",
+    "version_option",
+    "custom_version_option",
+    "help_option"
+   ],
+   "tests": [
+    "tests/test_context.py"
+   ]
+  },
+  {
+   "id": "exceptions",
+   "file": "src/click/exceptions.py",
+   "lines": 378,
+   "summary": "module exceptions",
+   "symbols": [
+    "ClickException",
+    "UsageError",
+    "BadParameter",
+    "MissingParameter",
+    "NoSuchOption",
+    "NoSuchCommand",
+    "BadOptionUsage",
+    "BadArgumentUsage",
+    "NoArgsIsHelpError",
+    "FileError",
+    "Abort",
+    "Exit"
+   ],
+   "tests": [
+    "tests/test_termui.py",
+    "tests/test_utils/test_echo_via_pager.py",
+    "tests/test_testing.py"
+   ]
+  },
+  {
+   "id": "formatting",
+   "file": "src/click/formatting.py",
+   "lines": 320,
+   "summary": "module formatting",
+   "symbols": [
+    "measure_table",
+    "iter_rows",
+    "wrap_text",
+    "HelpFormatter",
+    "join_options"
+   ],
+   "tests": [
+    "tests/test_formatting.py"
+   ]
+  },
+  {
+   "id": "globals",
+   "file": "src/click/globals.py",
+   "lines": 67,
+   "summary": "module globals",
+   "symbols": [
+    "get_current_context",
+    "push_context",
+    "pop_context",
+    "resolve_color_default"
+   ],
+   "tests": [
+    "tests/test_imports.py"
+   ]
+  },
+  {
+   "id": "parser",
+   "file": "src/click/parser.py",
+   "lines": 533,
+   "summary": "This module started out as largely a copy paste from the stdlib's",
+   "symbols": [],
+   "tests": [
+    "tests/test_deprecations.py",
+    "tests/test_commands.py",
+    "tests/test_parser.py"
+   ]
+  },
+  {
+   "id": "shell_completion",
+   "file": "src/click/shell_completion.py",
+   "lines": 796,
+   "summary": "module shell_completion",
+   "symbols": [
+    "shell_complete",
+    "CompletionItem",
+    "ShellComplete",
+    "BashComplete",
+    "ZshComplete",
+    "FishComplete",
+    "PowerShellComplete",
+    "add_completion_class",
+    "get_completion_class",
+    "split_arg_string"
+   ],
+   "tests": [
+    "tests/test_shell_completion.py",
+    "tests/test_deprecations.py",
+    "tests/test_parser.py"
+   ]
+  },
+  {
+   "id": "termui",
+   "file": "src/click/termui.py",
+   "lines": 1024,
+   "summary": "module termui",
+   "symbols": [
+    "hidden_prompt_func",
+    "prompt",
+    "confirm",
+    "get_pager_file",
+    "echo_via_pager",
+    "progressbar",
+    "clear",
+    "style",
+    "unstyle",
+    "secho",
+    "edit",
+    "launch",
+    "getchar",
+    "raw_terminal",
+    "pause"
+   ],
+   "tests": [
+    "tests/test_utils/test_prompt.py",
+    "tests/test_termui.py",
+    "tests/test_utils/test_echo.py"
+   ]
+  },
+  {
+   "id": "testing",
+   "file": "src/click/testing.py",
+   "lines": 796,
+   "summary": "module testing",
+   "symbols": [
+    "EchoingStdin",
+    "BytesIOCopy",
+    "StreamMixer",
+    "make_input_stream",
+    "Result",
+    "CliRunner"
+   ],
+   "tests": [
+    "tests/test_stream_lifecycle.py",
+    "tests/test_options.py",
+    "tests/test_utils/test_sentinel.py"
+   ]
+  },
+  {
+   "id": "types.ParamType",
+   "file": "src/click/types.py",
+   "lines": 175,
+   "summary": "Represents the type of a parameter. Validates and converts values",
+   "symbols": [
+    "to_info_dict",
+    "get_metavar",
+    "get_missing_message",
+    "convert",
+    "split_envvar_value",
+    "fail",
+    "shell_complete"
+   ],
+   "tests": [
+    "tests/test_info_dict.py",
+    "tests/test_termui.py",
+    "tests/test_types/test_ParamType.py"
+   ]
+  },
+  {
+   "id": "types.Choice",
+   "file": "src/click/types.py",
+   "lines": 174,
+   "summary": "The choice type allows a value to be checked against a fixed set",
+   "symbols": [
+    "__init__",
+    "to_info_dict",
+    "_normalized_mapping",
+    "normalize_choice",
+    "get_metavar",
+    "get_missing_message",
+    "convert",
+    "get_invalid_choice_message",
+    "shell_complete"
+   ],
+   "tests": [
+    "tests/test_shell_completion.py",
+    "tests/test_basic.py",
+    "tests/test_options.py"
+   ]
+  },
+  {
+   "id": "types.File",
+   "file": "src/click/types.py",
+   "lines": 129,
+   "summary": "Declares a parameter to be a file for reading or writing.  The file",
+   "symbols": [
+    "__init__",
+    "to_info_dict",
+    "resolve_lazy_flag",
+    "convert",
+    "shell_complete"
+   ],
+   "tests": [
+    "tests/test_options.py",
+    "tests/test_basic.py",
+    "tests/test_arguments.py"
+   ]
+  },
+  {
+   "id": "types.Path",
+   "file": "src/click/types.py",
+   "lines": 193,
+   "summary": "The ``Path`` type is similar to the :class:`File` type, but",
+   "symbols": [
+    "__init__",
+    "to_info_dict",
+    "coerce_path_result",
+    "convert",
+    "shell_complete"
+   ],
+   "tests": [
+    "tests/typing/typing_path.py",
+    "tests/test_types/test_Path.py",
+    "tests/test_utils/test__detect_program_name.py"
+   ]
+  },
+  {
+   "id": "types",
+   "file": "src/click/types.py",
+   "lines": 1437,
+   "summary": "other parts of types: functions and smaller classes",
+   "symbols": [
+    "ParamTypeInfoDict",
+    "CompositeParamType",
+    "FuncParamType",
+    "UnprocessedParamType",
+    "StringParamType",
+    "DateTimeInfoDict",
+    "DateTime",
+    "IntParamType",
+    "IntRange",
+    "FloatParamType",
+    "FloatRange",
+    "BoolParamType",
+    "UUIDParameterType",
+    "FileInfoDict",
+    "PathInfoDict",
+    "TupleInfoDict",
+    "Tuple",
+    "convert_type",
+    "OptionHelpExtra"
+   ],
+   "tests": [
+    "tests/test_types/test_convert_type.py",
+    "tests/test_options.py",
+    "tests/test_shell_completion.py"
+   ]
+  },
+  {
+   "id": "utils",
+   "file": "src/click/utils.py",
+   "lines": 676,
+   "summary": "module utils",
+   "symbols": [
+    "make_str",
+    "echo",
+    "open_file",
+    "format_filename",
+    "get_app_dir"
+   ],
+   "tests": [
+    "tests/test_deprecations.py",
+    "tests/test_utils/test__expand_args.py",
+    "tests/test_utils/test_make_default_short_help.py"
+   ]
+  }
+ ],
+ "symbols": [
+  {
+   "name": "__getattr__",
+   "kind": "function",
+   "file": "src/click/__init__.py",
+   "start": 76,
+   "end": 144,
+   "doc": ""
+  },
+  {
+   "name": "_make_text_stream",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 22,
+   "end": 40,
+   "doc": ""
+  },
+  {
+   "name": "is_ascii_encoding",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 43,
+   "end": 48,
+   "doc": "Checks if a given encoding is ascii."
+  },
+  {
+   "name": "get_best_encoding",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 51,
+   "end": 56,
+   "doc": "Returns the default stream encoding if not found."
+  },
+  {
+   "name": "_NonClosingTextIOWrapper",
+   "kind": "class",
+   "file": "src/click/_compat.py",
+   "start": 59,
+   "end": 82,
+   "doc": ""
+  },
+  {
+   "name": "_NonClosingTextIOWrapper.__init__",
+   "kind": "method",
+   "file": "src/click/_compat.py",
+   "start": 60,
+   "end": 72,
+   "doc": ""
+  },
+  {
+   "name": "_NonClosingTextIOWrapper.__del__",
+   "kind": "method",
+   "file": "src/click/_compat.py",
+   "start": 74,
+   "end": 78,
+   "doc": ""
+  },
+  {
+   "name": "_NonClosingTextIOWrapper.isatty",
+   "kind": "method",
+   "file": "src/click/_compat.py",
+   "start": 80,
+   "end": 82,
+   "doc": ""
+  },
+  {
+   "name": "_FixupStream",
+   "kind": "class",
+   "file": "src/click/_compat.py",
+   "start": 85,
+   "end": 151,
+   "doc": "The new io interface needs more from streams than streams"
+  },
+  {
+   "name": "_FixupStream.__init__",
+   "kind": "method",
+   "file": "src/click/_compat.py",
+   "start": 95,
+   "end": 103,
+   "doc": ""
+  },
+  {
+   "name": "_FixupStream.__getattr__",
+   "kind": "method",
+   "file": "src/click/_compat.py",
+   "start": 105,
+   "end": 106,
+   "doc": ""
+  },
+  {
+   "name": "_FixupStream.read1",
+   "kind": "method",
+   "file": "src/click/_compat.py",
+   "start": 108,
+   "end": 114,
+   "doc": ""
+  },
+  {
+   "name": "_FixupStream.readable",
+   "kind": "method",
+   "file": "src/click/_compat.py",
+   "start": 116,
+   "end": 126,
+   "doc": ""
+  },
+  {
+   "name": "_FixupStream.writable",
+   "kind": "method",
+   "file": "src/click/_compat.py",
+   "start": 128,
+   "end": 141,
+   "doc": ""
+  },
+  {
+   "name": "_FixupStream.seekable",
+   "kind": "method",
+   "file": "src/click/_compat.py",
+   "start": 143,
+   "end": 151,
+   "doc": ""
+  },
+  {
+   "name": "_is_binary_reader",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 154,
+   "end": 158,
+   "doc": ""
+  },
+  {
+   "name": "_is_binary_writer",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 163,
+   "end": 173,
+   "doc": ""
+  },
+  {
+   "name": "_find_binary_reader",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 176,
+   "end": 191,
+   "doc": ""
+  },
+  {
+   "name": "_find_binary_writer",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 194,
+   "end": 209,
+   "doc": ""
+  },
+  {
+   "name": "_stream_is_misconfigured",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 212,
+   "end": 218,
+   "doc": "A stream is misconfigured if its encoding is ASCII."
+  },
+  {
+   "name": "_is_compat_stream_attr",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 221,
+   "end": 227,
+   "doc": "A stream attribute is compatible if it is equal to the"
+  },
+  {
+   "name": "_is_compatible_text_stream",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 230,
+   "end": 238,
+   "doc": "Check if a stream's encoding and errors attributes are"
+  },
+  {
+   "name": "_force_correct_text_stream",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 241,
+   "end": 284,
+   "doc": ""
+  },
+  {
+   "name": "_force_correct_text_reader",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 287,
+   "end": 300,
+   "doc": ""
+  },
+  {
+   "name": "_force_correct_text_writer",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 303,
+   "end": 316,
+   "doc": ""
+  },
+  {
+   "name": "get_binary_stdin",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 319,
+   "end": 323,
+   "doc": ""
+  },
+  {
+   "name": "get_binary_stdout",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 326,
+   "end": 330,
+   "doc": ""
+  },
+  {
+   "name": "get_binary_stderr",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 333,
+   "end": 337,
+   "doc": ""
+  },
+  {
+   "name": "get_text_stdin",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 340,
+   "end": 344,
+   "doc": ""
+  },
+  {
+   "name": "get_text_stdout",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 347,
+   "end": 351,
+   "doc": ""
+  },
+  {
+   "name": "get_text_stderr",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 354,
+   "end": 358,
+   "doc": ""
+  },
+  {
+   "name": "_wrap_io_open",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 361,
+   "end": 371,
+   "doc": "Handles not passing ``encoding`` and ``errors`` in binary mode."
+  },
+  {
+   "name": "open_stream",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 374,
+   "end": 452,
+   "doc": ""
+  },
+  {
+   "name": "_AtomicFile",
+   "kind": "class",
+   "file": "src/click/_compat.py",
+   "start": 455,
+   "end": 488,
+   "doc": ""
+  },
+  {
+   "name": "_AtomicFile.__init__",
+   "kind": "method",
+   "file": "src/click/_compat.py",
+   "start": 456,
+   "end": 460,
+   "doc": ""
+  },
+  {
+   "name": "_AtomicFile.name",
+   "kind": "method",
+   "file": "src/click/_compat.py",
+   "start": 463,
+   "end": 464,
+   "doc": ""
+  },
+  {
+   "name": "_AtomicFile.close",
+   "kind": "method",
+   "file": "src/click/_compat.py",
+   "start": 466,
+   "end": 471,
+   "doc": ""
+  },
+  {
+   "name": "_AtomicFile.__getattr__",
+   "kind": "method",
+   "file": "src/click/_compat.py",
+   "start": 473,
+   "end": 474,
+   "doc": ""
+  },
+  {
+   "name": "_AtomicFile.__enter__",
+   "kind": "method",
+   "file": "src/click/_compat.py",
+   "start": 476,
+   "end": 477,
+   "doc": ""
+  },
+  {
+   "name": "_AtomicFile.__exit__",
+   "kind": "method",
+   "file": "src/click/_compat.py",
+   "start": 479,
+   "end": 485,
+   "doc": ""
+  },
+  {
+   "name": "_AtomicFile.__repr__",
+   "kind": "method",
+   "file": "src/click/_compat.py",
+   "start": 487,
+   "end": 488,
+   "doc": ""
+  },
+  {
+   "name": "strip_ansi",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 491,
+   "end": 492,
+   "doc": ""
+  },
+  {
+   "name": "_is_jupyter_kernel_output",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 495,
+   "end": 499,
+   "doc": ""
+  },
+  {
+   "name": "should_strip_ansi",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 502,
+   "end": 513,
+   "doc": ""
+  },
+  {
+   "name": "term_len",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 536,
+   "end": 537,
+   "doc": ""
+  },
+  {
+   "name": "isatty",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 540,
+   "end": 544,
+   "doc": ""
+  },
+  {
+   "name": "_make_cached_stream_func",
+   "kind": "function",
+   "file": "src/click/_compat.py",
+   "start": 547,
+   "end": 572,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar",
+   "kind": "class",
+   "file": "src/click/_termui_impl.py",
+   "start": 43,
+   "end": 380,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.__init__",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 44,
+   "end": 113,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.__enter__",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 115,
+   "end": 118,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.__exit__",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 120,
+   "end": 126,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.__iter__",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 128,
+   "end": 132,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.__next__",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 134,
+   "end": 140,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.render_finish",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 142,
+   "end": 154,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.pct",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 157,
+   "end": 160,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.time_per_iteration",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 163,
+   "end": 166,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.eta",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 169,
+   "end": 172,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.format_eta",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 174,
+   "end": 193,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.format_pos",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 195,
+   "end": 199,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.format_pct",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 201,
+   "end": 202,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.format_bar",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 204,
+   "end": 221,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.format_progress_line",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 223,
+   "end": 248,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.render_progress",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 250,
+   "end": 294,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.make_step",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 296,
+   "end": 316,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.update",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 318,
+   "end": 342,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.finish",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 344,
+   "end": 347,
+   "doc": ""
+  },
+  {
+   "name": "ProgressBar.generator",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 349,
+   "end": 380,
+   "doc": ""
+  },
+  {
+   "name": "_PagerWriter",
+   "kind": "class",
+   "file": "src/click/_termui_impl.py",
+   "start": 383,
+   "end": 420,
+   "doc": "Wrap a pager's output stream to strip ANSI styling when colors are"
+  },
+  {
+   "name": "_PagerWriter.__init__",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 397,
+   "end": 399,
+   "doc": ""
+  },
+  {
+   "name": "_PagerWriter.write",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 401,
+   "end": 405,
+   "doc": ""
+  },
+  {
+   "name": "_PagerWriter.writelines",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 407,
+   "end": 409,
+   "doc": ""
+  },
+  {
+   "name": "_PagerWriter.flush",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 411,
+   "end": 412,
+   "doc": ""
+  },
+  {
+   "name": "_PagerWriter.close",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 414,
+   "end": 417,
+   "doc": ""
+  },
+  {
+   "name": "_PagerWriter.__getattr__",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 419,
+   "end": 420,
+   "doc": ""
+  },
+  {
+   "name": "_resolve_pager_command",
+   "kind": "function",
+   "file": "src/click/_termui_impl.py",
+   "start": 423,
+   "end": 446,
+   "doc": "Resolve a pager ``argv`` to an absolute command path and its parameters."
+  },
+  {
+   "name": "_pager_contextmanager",
+   "kind": "function",
+   "file": "src/click/_termui_impl.py",
+   "start": 449,
+   "end": 491,
+   "doc": "Decide what method to use for paging through text."
+  },
+  {
+   "name": "get_pager_file",
+   "kind": "function",
+   "file": "src/click/_termui_impl.py",
+   "start": 495,
+   "end": 515,
+   "doc": "Context manager."
+  },
+  {
+   "name": "_less_uses_raw_mode",
+   "kind": "function",
+   "file": "src/click/_termui_impl.py",
+   "start": 518,
+   "end": 543,
+   "doc": "Detect a raw-control-characters request in a ``less`` invocation."
+  },
+  {
+   "name": "_pipepager",
+   "kind": "function",
+   "file": "src/click/_termui_impl.py",
+   "start": 547,
+   "end": 630,
+   "doc": "Page through text by feeding it to another program."
+  },
+  {
+   "name": "_tempfilepager",
+   "kind": "function",
+   "file": "src/click/_termui_impl.py",
+   "start": 634,
+   "end": 665,
+   "doc": "Page through text by invoking a program on a temporary file."
+  },
+  {
+   "name": "_nullpager",
+   "kind": "function",
+   "file": "src/click/_termui_impl.py",
+   "start": 669,
+   "end": 678,
+   "doc": "Simply print unformatted text. This is the ultimate fallback."
+  },
+  {
+   "name": "Editor",
+   "kind": "class",
+   "file": "src/click/_termui_impl.py",
+   "start": 681,
+   "end": 794,
+   "doc": ""
+  },
+  {
+   "name": "Editor.__init__",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 682,
+   "end": 692,
+   "doc": ""
+  },
+  {
+   "name": "Editor.get_editor",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 694,
+   "end": 709,
+   "doc": ""
+  },
+  {
+   "name": "Editor.edit_files",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 711,
+   "end": 739,
+   "doc": ""
+  },
+  {
+   "name": "Editor.edit",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 742,
+   "end": 742,
+   "doc": ""
+  },
+  {
+   "name": "Editor.edit",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 747,
+   "end": 747,
+   "doc": ""
+  },
+  {
+   "name": "Editor.edit",
+   "kind": "method",
+   "file": "src/click/_termui_impl.py",
+   "start": 749,
+   "end": 794,
+   "doc": ""
+  },
+  {
+   "name": "open_url",
+   "kind": "function",
+   "file": "src/click/_termui_impl.py",
+   "start": 797,
+   "end": 864,
+   "doc": ""
+  },
+  {
+   "name": "_translate_ch_to_exc",
+   "kind": "function",
+   "file": "src/click/_termui_impl.py",
+   "start": 867,
+   "end": 875,
+   "doc": ""
+  },
+  {
+   "name": "_truncate_visible",
+   "kind": "function",
+   "file": "src/click/_textwrap.py",
+   "start": 11,
+   "end": 35,
+   "doc": "Return the longest prefix of ``text`` containing at most ``n`` visible"
+  },
+  {
+   "name": "TextWrapper",
+   "kind": "class",
+   "file": "src/click/_textwrap.py",
+   "start": 38,
+   "end": 188,
+   "doc": "``textwrap.TextWrapper`` variant that measures widths by visible"
+  },
+  {
+   "name": "TextWrapper._handle_long_word",
+   "kind": "method",
+   "file": "src/click/_textwrap.py",
+   "start": 48,
+   "end": 64,
+   "doc": ""
+  },
+  {
+   "name": "TextWrapper._wrap_chunks",
+   "kind": "method",
+   "file": "src/click/_textwrap.py",
+   "start": 66,
+   "end": 162,
+   "doc": ""
+  },
+  {
+   "name": "TextWrapper.extra_indent",
+   "kind": "method",
+   "file": "src/click/_textwrap.py",
+   "start": 165,
+   "end": 175,
+   "doc": ""
+  },
+  {
+   "name": "TextWrapper.indent_only",
+   "kind": "method",
+   "file": "src/click/_textwrap.py",
+   "start": 177,
+   "end": 188,
+   "doc": ""
+  },
+  {
+   "name": "Sentinel",
+   "kind": "class",
+   "file": "src/click/_utils.py",
+   "start": 7,
+   "end": 28,
+   "doc": "Enum used to define sentinel values."
+  },
+  {
+   "name": "Sentinel.__repr__",
+   "kind": "method",
+   "file": "src/click/_utils.py",
+   "start": 18,
+   "end": 19,
+   "doc": ""
+  },
+  {
+   "name": "Sentinel.__copy__",
+   "kind": "method",
+   "file": "src/click/_utils.py",
+   "start": 21,
+   "end": 22,
+   "doc": ""
+  },
+  {
+   "name": "Sentinel.__deepcopy__",
+   "kind": "method",
+   "file": "src/click/_utils.py",
+   "start": 24,
+   "end": 25,
+   "doc": ""
+  },
+  {
+   "name": "Sentinel.__reduce_ex__",
+   "kind": "method",
+   "file": "src/click/_utils.py",
+   "start": 27,
+   "end": 28,
+   "doc": ""
+  },
+  {
+   "name": "_WindowsConsoleRawIOBase",
+   "kind": "class",
+   "file": "src/click/_winconsole.py",
+   "start": 114,
+   "end": 120,
+   "doc": ""
+  },
+  {
+   "name": "_WindowsConsoleRawIOBase.__init__",
+   "kind": "method",
+   "file": "src/click/_winconsole.py",
+   "start": 115,
+   "end": 116,
+   "doc": ""
+  },
+  {
+   "name": "_WindowsConsoleRawIOBase.isatty",
+   "kind": "method",
+   "file": "src/click/_winconsole.py",
+   "start": 118,
+   "end": 120,
+   "doc": ""
+  },
+  {
+   "name": "_WindowsConsoleReader",
+   "kind": "class",
+   "file": "src/click/_winconsole.py",
+   "start": 123,
+   "end": 155,
+   "doc": ""
+  },
+  {
+   "name": "_WindowsConsoleReader.readable",
+   "kind": "method",
+   "file": "src/click/_winconsole.py",
+   "start": 124,
+   "end": 125,
+   "doc": ""
+  },
+  {
+   "name": "_WindowsConsoleReader.readinto",
+   "kind": "method",
+   "file": "src/click/_winconsole.py",
+   "start": 127,
+   "end": 155,
+   "doc": ""
+  },
+  {
+   "name": "_WindowsConsoleWriter",
+   "kind": "class",
+   "file": "src/click/_winconsole.py",
+   "start": 158,
+   "end": 187,
+   "doc": ""
+  },
+  {
+   "name": "_WindowsConsoleWriter.writable",
+   "kind": "method",
+   "file": "src/click/_winconsole.py",
+   "start": 159,
+   "end": 160,
+   "doc": ""
+  },
+  {
+   "name": "_WindowsConsoleWriter._get_error_message",
+   "kind": "method",
+   "file": "src/click/_winconsole.py",
+   "start": 163,
+   "end": 168,
+   "doc": ""
+  },
+  {
+   "name": "_WindowsConsoleWriter.write",
+   "kind": "method",
+   "file": "src/click/_winconsole.py",
+   "start": 170,
+   "end": 187,
+   "doc": ""
+  },
+  {
+   "name": "ConsoleStream",
+   "kind": "class",
+   "file": "src/click/_winconsole.py",
+   "start": 190,
+   "end": 219,
+   "doc": ""
+  },
+  {
+   "name": "ConsoleStream.__init__",
+   "kind": "method",
+   "file": "src/click/_winconsole.py",
+   "start": 191,
+   "end": 193,
+   "doc": ""
+  },
+  {
+   "name": "ConsoleStream.name",
+   "kind": "method",
+   "file": "src/click/_winconsole.py",
+   "start": 196,
+   "end": 197,
+   "doc": ""
+  },
+  {
+   "name": "ConsoleStream.write",
+   "kind": "method",
+   "file": "src/click/_winconsole.py",
+   "start": 199,
+   "end": 206,
+   "doc": ""
+  },
+  {
+   "name": "ConsoleStream.writelines",
+   "kind": "method",
+   "file": "src/click/_winconsole.py",
+   "start": 208,
+   "end": 210,
+   "doc": ""
+  },
+  {
+   "name": "ConsoleStream.__getattr__",
+   "kind": "method",
+   "file": "src/click/_winconsole.py",
+   "start": 212,
+   "end": 213,
+   "doc": ""
+  },
+  {
+   "name": "ConsoleStream.isatty",
+   "kind": "method",
+   "file": "src/click/_winconsole.py",
+   "start": 215,
+   "end": 216,
+   "doc": ""
+  },
+  {
+   "name": "ConsoleStream.__repr__",
+   "kind": "method",
+   "file": "src/click/_winconsole.py",
+   "start": 218,
+   "end": 219,
+   "doc": ""
+  },
+  {
+   "name": "_get_text_stdin",
+   "kind": "function",
+   "file": "src/click/_winconsole.py",
+   "start": 222,
+   "end": 229,
+   "doc": ""
+  },
+  {
+   "name": "_get_text_stdout",
+   "kind": "function",
+   "file": "src/click/_winconsole.py",
+   "start": 232,
+   "end": 239,
+   "doc": ""
+  },
+  {
+   "name": "_get_text_stderr",
+   "kind": "function",
+   "file": "src/click/_winconsole.py",
+   "start": 242,
+   "end": 249,
+   "doc": ""
+  },
+  {
+   "name": "_is_console",
+   "kind": "function",
+   "file": "src/click/_winconsole.py",
+   "start": 259,
+   "end": 269,
+   "doc": ""
+  },
+  {
+   "name": "_get_windows_console_stream",
+   "kind": "function",
+   "file": "src/click/_winconsole.py",
+   "start": 272,
+   "end": 292,
+   "doc": ""
+  },
+  {
+   "name": "_complete_visible_commands",
+   "kind": "function",
+   "file": "src/click/core.py",
+   "start": 63,
+   "end": 79,
+   "doc": "List all the subcommands of a group that start with the"
+  },
+  {
+   "name": "_check_nested_chain",
+   "kind": "function",
+   "file": "src/click/core.py",
+   "start": 82,
+   "end": 99,
+   "doc": ""
+  },
+  {
+   "name": "_echo_aborted",
+   "kind": "function",
+   "file": "src/click/core.py",
+   "start": 102,
+   "end": 104,
+   "doc": "Write the final abort message to standard error."
+  },
+  {
+   "name": "_format_deprecated_label",
+   "kind": "function",
+   "file": "src/click/core.py",
+   "start": 107,
+   "end": 112,
+   "doc": "Return the parenthesized deprecation label shown in help text."
+  },
+  {
+   "name": "_format_deprecated_suffix",
+   "kind": "function",
+   "file": "src/click/core.py",
+   "start": 115,
+   "end": 121,
+   "doc": "Return the trailing reason for a ``DeprecationWarning`` message,"
+  },
+  {
+   "name": "batch",
+   "kind": "function",
+   "file": "src/click/core.py",
+   "start": 124,
+   "end": 125,
+   "doc": ""
+  },
+  {
+   "name": "augment_usage_errors",
+   "kind": "function",
+   "file": "src/click/core.py",
+   "start": 129,
+   "end": 144,
+   "doc": "Context manager that attaches extra information to exceptions."
+  },
+  {
+   "name": "iter_params_for_processing",
+   "kind": "function",
+   "file": "src/click/core.py",
+   "start": 147,
+   "end": 171,
+   "doc": "Returns all declared parameters in the order they should be processed."
+  },
+  {
+   "name": "ParameterSource",
+   "kind": "class",
+   "file": "src/click/core.py",
+   "start": 174,
+   "end": 210,
+   "doc": "This is an :class:`~enum.IntEnum` that indicates the source of a"
+  },
+  {
+   "name": "Context",
+   "kind": "class",
+   "file": "src/click/core.py",
+   "start": 213,
+   "end": 957,
+   "doc": "The context is a special internal object that holds state relevant"
+  },
+  {
+   "name": "Context.__init__",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 345,
+   "end": 518,
+   "doc": ""
+  },
+  {
+   "name": "Context.protected_args",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 521,
+   "end": 530,
+   "doc": ""
+  },
+  {
+   "name": "Context.to_info_dict",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 532,
+   "end": 551,
+   "doc": ""
+  },
+  {
+   "name": "Context.__enter__",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 553,
+   "end": 556,
+   "doc": ""
+  },
+  {
+   "name": "Context.__exit__",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 558,
+   "end": 570,
+   "doc": ""
+  },
+  {
+   "name": "Context.scope",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 573,
+   "end": 608,
+   "doc": ""
+  },
+  {
+   "name": "Context.meta",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 611,
+   "end": 636,
+   "doc": ""
+  },
+  {
+   "name": "Context.make_formatter",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 638,
+   "end": 650,
+   "doc": ""
+  },
+  {
+   "name": "Context.with_resource",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 652,
+   "end": 679,
+   "doc": ""
+  },
+  {
+   "name": "Context.call_on_close",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 681,
+   "end": 691,
+   "doc": ""
+  },
+  {
+   "name": "Context.close",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 693,
+   "end": 698,
+   "doc": ""
+  },
+  {
+   "name": "Context._close_with_exception_info",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 700,
+   "end": 716,
+   "doc": ""
+  },
+  {
+   "name": "Context.command_path",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 719,
+   "end": 735,
+   "doc": ""
+  },
+  {
+   "name": "Context.find_root",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 737,
+   "end": 742,
+   "doc": ""
+  },
+  {
+   "name": "Context.find_object",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 744,
+   "end": 754,
+   "doc": ""
+  },
+  {
+   "name": "Context.ensure_object",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 756,
+   "end": 763,
+   "doc": ""
+  },
+  {
+   "name": "Context._default_map_has",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 765,
+   "end": 777,
+   "doc": ""
+  },
+  {
+   "name": "Context.lookup_default",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 780,
+   "end": 782,
+   "doc": ""
+  },
+  {
+   "name": "Context.lookup_default",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 785,
+   "end": 787,
+   "doc": ""
+  },
+  {
+   "name": "Context.lookup_default",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 789,
+   "end": 809,
+   "doc": ""
+  },
+  {
+   "name": "Context.fail",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 811,
+   "end": 817,
+   "doc": ""
+  },
+  {
+   "name": "Context.abort",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 819,
+   "end": 821,
+   "doc": ""
+  },
+  {
+   "name": "Context.exit",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 823,
+   "end": 831,
+   "doc": ""
+  },
+  {
+   "name": "Context.get_usage",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 833,
+   "end": 837,
+   "doc": ""
+  },
+  {
+   "name": "Context.get_help",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 839,
+   "end": 843,
+   "doc": ""
+  },
+  {
+   "name": "Context._make_sub_context",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 845,
+   "end": 851,
+   "doc": ""
+  },
+  {
+   "name": "Context.invoke",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 854,
+   "end": 856,
+   "doc": ""
+  },
+  {
+   "name": "Context.invoke",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 859,
+   "end": 859,
+   "doc": ""
+  },
+  {
+   "name": "Context.invoke",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 861,
+   "end": 911,
+   "doc": ""
+  },
+  {
+   "name": "Context.forward",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 913,
+   "end": 930,
+   "doc": ""
+  },
+  {
+   "name": "Context.set_parameter_source",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 932,
+   "end": 939,
+   "doc": ""
+  },
+  {
+   "name": "Context.get_parameter_source",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 941,
+   "end": 957,
+   "doc": ""
+  },
+  {
+   "name": "Command",
+   "kind": "class",
+   "file": "src/click/core.py",
+   "start": 960,
+   "end": 1653,
+   "doc": "Commands are the basic building block of command line interfaces in"
+  },
+  {
+   "name": "Command.__init__",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1036,
+   "end": 1078,
+   "doc": ""
+  },
+  {
+   "name": "Command.to_info_dict",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1080,
+   "end": 1089,
+   "doc": ""
+  },
+  {
+   "name": "Command.__repr__",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1091,
+   "end": 1092,
+   "doc": ""
+  },
+  {
+   "name": "Command.get_usage",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1094,
+   "end": 1101,
+   "doc": ""
+  },
+  {
+   "name": "Command.get_params",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1103,
+   "end": 1157,
+   "doc": ""
+  },
+  {
+   "name": "Command.format_usage",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1159,
+   "end": 1165,
+   "doc": ""
+  },
+  {
+   "name": "Command.collect_usage_pieces",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1167,
+   "end": 1176,
+   "doc": ""
+  },
+  {
+   "name": "Command.get_help_option_names",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1178,
+   "end": 1191,
+   "doc": ""
+  },
+  {
+   "name": "Command.get_help_option",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1193,
+   "end": 1225,
+   "doc": ""
+  },
+  {
+   "name": "Command.make_parser",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1227,
+   "end": 1232,
+   "doc": ""
+  },
+  {
+   "name": "Command.get_help",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1234,
+   "end": 1241,
+   "doc": ""
+  },
+  {
+   "name": "Command.get_short_help_str",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1243,
+   "end": 1257,
+   "doc": ""
+  },
+  {
+   "name": "Command.format_help",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1259,
+   "end": 1276,
+   "doc": ""
+  },
+  {
+   "name": "Command.format_help_text",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1278,
+   "end": 1294,
+   "doc": ""
+  },
+  {
+   "name": "Command.format_options",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1296,
+   "end": 1306,
+   "doc": ""
+  },
+  {
+   "name": "Command.format_arguments",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1308,
+   "end": 1319,
+   "doc": ""
+  },
+  {
+   "name": "Command.format_epilog",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1321,
+   "end": 1328,
+   "doc": ""
+  },
+  {
+   "name": "Command.make_context",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1330,
+   "end": 1365,
+   "doc": ""
+  },
+  {
+   "name": "Command.parse_args",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1367,
+   "end": 1398,
+   "doc": ""
+  },
+  {
+   "name": "Command.invoke",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1400,
+   "end": 1414,
+   "doc": ""
+  },
+  {
+   "name": "Command.shell_complete",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1416,
+   "end": 1461,
+   "doc": ""
+  },
+  {
+   "name": "Command.main",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1464,
+   "end": 1471,
+   "doc": ""
+  },
+  {
+   "name": "Command.main",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1474,
+   "end": 1481,
+   "doc": ""
+  },
+  {
+   "name": "Command.main",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1483,
+   "end": 1617,
+   "doc": ""
+  },
+  {
+   "name": "Command._main_shell_completion",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1619,
+   "end": 1649,
+   "doc": ""
+  },
+  {
+   "name": "Command.__call__",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1651,
+   "end": 1653,
+   "doc": ""
+  },
+  {
+   "name": "_FakeSubclassCheck",
+   "kind": "class",
+   "file": "src/click/core.py",
+   "start": 1656,
+   "end": 1661,
+   "doc": ""
+  },
+  {
+   "name": "_FakeSubclassCheck.__subclasscheck__",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1657,
+   "end": 1658,
+   "doc": ""
+  },
+  {
+   "name": "_FakeSubclassCheck.__instancecheck__",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1660,
+   "end": 1661,
+   "doc": ""
+  },
+  {
+   "name": "_BaseCommand",
+   "kind": "class",
+   "file": "src/click/core.py",
+   "start": 1664,
+   "end": 1668,
+   "doc": ".. deprecated:: 8.2"
+  },
+  {
+   "name": "Group",
+   "kind": "class",
+   "file": "src/click/core.py",
+   "start": 1671,
+   "end": 2131,
+   "doc": "A group is a command that nests other commands (or more groups)."
+  },
+  {
+   "name": "Group.__init__",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1730,
+   "end": 1783,
+   "doc": ""
+  },
+  {
+   "name": "Group.to_info_dict",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1785,
+   "end": 1801,
+   "doc": ""
+  },
+  {
+   "name": "Group.add_command",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1803,
+   "end": 1811,
+   "doc": ""
+  },
+  {
+   "name": "Group.command",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1814,
+   "end": 1814,
+   "doc": ""
+  },
+  {
+   "name": "Group.command",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1817,
+   "end": 1819,
+   "doc": ""
+  },
+  {
+   "name": "Group.command",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1821,
+   "end": 1860,
+   "doc": ""
+  },
+  {
+   "name": "Group.group",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1863,
+   "end": 1863,
+   "doc": ""
+  },
+  {
+   "name": "Group.group",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1866,
+   "end": 1868,
+   "doc": ""
+  },
+  {
+   "name": "Group.group",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1870,
+   "end": 1912,
+   "doc": ""
+  },
+  {
+   "name": "Group.result_callback",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1914,
+   "end": 1957,
+   "doc": ""
+  },
+  {
+   "name": "Group.get_command",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1959,
+   "end": 1963,
+   "doc": ""
+  },
+  {
+   "name": "Group.list_commands",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1965,
+   "end": 1967,
+   "doc": ""
+  },
+  {
+   "name": "Group.collect_usage_pieces",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1969,
+   "end": 1972,
+   "doc": ""
+  },
+  {
+   "name": "Group.format_options",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1974,
+   "end": 1976,
+   "doc": ""
+  },
+  {
+   "name": "Group.format_commands",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 1978,
+   "end": 2004,
+   "doc": ""
+  },
+  {
+   "name": "Group.parse_args",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2006,
+   "end": 2018,
+   "doc": ""
+  },
+  {
+   "name": "Group.invoke",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2020,
+   "end": 2086,
+   "doc": ""
+  },
+  {
+   "name": "Group.resolve_command",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2088,
+   "end": 2112,
+   "doc": ""
+  },
+  {
+   "name": "Group.shell_complete",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2114,
+   "end": 2131,
+   "doc": ""
+  },
+  {
+   "name": "_MultiCommand",
+   "kind": "class",
+   "file": "src/click/core.py",
+   "start": 2134,
+   "end": 2138,
+   "doc": ".. deprecated:: 8.2"
+  },
+  {
+   "name": "CommandCollection",
+   "kind": "class",
+   "file": "src/click/core.py",
+   "start": 2141,
+   "end": 2196,
+   "doc": "A :class:`Group` that looks up subcommands on other groups. If a command"
+  },
+  {
+   "name": "CommandCollection.__init__",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2159,
+   "end": 2167,
+   "doc": ""
+  },
+  {
+   "name": "CommandCollection.add_source",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2169,
+   "end": 2171,
+   "doc": ""
+  },
+  {
+   "name": "CommandCollection.get_command",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2173,
+   "end": 2188,
+   "doc": ""
+  },
+  {
+   "name": "CommandCollection.list_commands",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2190,
+   "end": 2196,
+   "doc": ""
+  },
+  {
+   "name": "_check_iter",
+   "kind": "function",
+   "file": "src/click/core.py",
+   "start": 2199,
+   "end": 2206,
+   "doc": "Check if the value is iterable but not a string. Raises a type"
+  },
+  {
+   "name": "Parameter",
+   "kind": "class",
+   "file": "src/click/core.py",
+   "start": 2209,
+   "end": 2888,
+   "doc": "A parameter to a command comes in two versions: they are either"
+  },
+  {
+   "name": "Parameter.__init__",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2328,
+   "end": 2407,
+   "doc": ""
+  },
+  {
+   "name": "Parameter._hide_unset",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2410,
+   "end": 2415,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.to_info_dict",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2417,
+   "end": 2441,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.__repr__",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2443,
+   "end": 2444,
+   "doc": ""
+  },
+  {
+   "name": "Parameter._parse_decls",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2447,
+   "end": 2449,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.human_readable_name",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2452,
+   "end": 2456,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.make_metavar",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2458,
+   "end": 2470,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.get_default",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2473,
+   "end": 2475,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.get_default",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2478,
+   "end": 2480,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.get_default",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2482,
+   "end": 2513,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.add_to_parser",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2516,
+   "end": 2516,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.consume_value",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2518,
+   "end": 2564,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.type_cast_value",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2566,
+   "end": 2620,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.value_is_missing",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2622,
+   "end": 2638,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.process_value",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2640,
+   "end": 2700,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.resolve_envvar_value",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2702,
+   "end": 2745,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.value_from_envvar",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2747,
+   "end": 2761,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.handle_parse_result",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2763,
+   "end": 2849,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.get_help_record",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2851,
+   "end": 2852,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.get_usage_pieces",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2854,
+   "end": 2855,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.get_error_hint",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2857,
+   "end": 2865,
+   "doc": ""
+  },
+  {
+   "name": "Parameter.shell_complete",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2867,
+   "end": 2888,
+   "doc": ""
+  },
+  {
+   "name": "Option",
+   "kind": "class",
+   "file": "src/click/core.py",
+   "start": 2891,
+   "end": 3695,
+   "doc": "Options are usually optional values on the command line and"
+  },
+  {
+   "name": "Option.__init__",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 2983,
+   "end": 3058,
+   "doc": ""
+  },
+  {
+   "name": "Option.is_bool_flag",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3061,
+   "end": 3067,
+   "doc": ""
+  },
+  {
+   "name": "Option.flag_activation_value",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3070,
+   "end": 3080,
+   "doc": ""
+  },
+  {
+   "name": "Option._infer_flag_kind",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3082,
+   "end": 3113,
+   "doc": ""
+  },
+  {
+   "name": "Option._pick_type",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3115,
+   "end": 3152,
+   "doc": ""
+  },
+  {
+   "name": "Option._resolve_lazy_default",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3154,
+   "end": 3176,
+   "doc": ""
+  },
+  {
+   "name": "Option._validate",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3178,
+   "end": 3198,
+   "doc": ""
+  },
+  {
+   "name": "Option.to_info_dict",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3200,
+   "end": 3220,
+   "doc": ""
+  },
+  {
+   "name": "Option.get_default",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3222,
+   "end": 3252,
+   "doc": ""
+  },
+  {
+   "name": "Option.get_error_hint",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3254,
+   "end": 3262,
+   "doc": ""
+  },
+  {
+   "name": "Option._parse_decls",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3264,
+   "end": 3323,
+   "doc": ""
+  },
+  {
+   "name": "Option.add_to_parser",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3325,
+   "end": 3365,
+   "doc": ""
+  },
+  {
+   "name": "Option.get_help_spec",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3367,
+   "end": 3396,
+   "doc": ""
+  },
+  {
+   "name": "Option.get_help_record",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3398,
+   "end": 3421,
+   "doc": ""
+  },
+  {
+   "name": "Option.get_help_extra",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3423,
+   "end": 3504,
+   "doc": ""
+  },
+  {
+   "name": "Option.prompt_for_value",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3506,
+   "end": 3553,
+   "doc": ""
+  },
+  {
+   "name": "Option.resolve_envvar_value",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3555,
+   "end": 3577,
+   "doc": ""
+  },
+  {
+   "name": "Option.value_from_envvar",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3579,
+   "end": 3625,
+   "doc": ""
+  },
+  {
+   "name": "Option.consume_value",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3627,
+   "end": 3681,
+   "doc": ""
+  },
+  {
+   "name": "Option.process_value",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3683,
+   "end": 3695,
+   "doc": ""
+  },
+  {
+   "name": "Argument",
+   "kind": "class",
+   "file": "src/click/core.py",
+   "start": 3698,
+   "end": 3801,
+   "doc": "Arguments are positional parameters to a command.  They generally"
+  },
+  {
+   "name": "Argument.__init__",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3713,
+   "end": 3733,
+   "doc": ""
+  },
+  {
+   "name": "Argument.human_readable_name",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3736,
+   "end": 3739,
+   "doc": ""
+  },
+  {
+   "name": "Argument.make_metavar",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3741,
+   "end": 3758,
+   "doc": ""
+  },
+  {
+   "name": "Argument._parse_decls",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3760,
+   "end": 3777,
+   "doc": ""
+  },
+  {
+   "name": "Argument.get_usage_pieces",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3779,
+   "end": 3780,
+   "doc": ""
+  },
+  {
+   "name": "Argument.get_help_record",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3782,
+   "end": 3793,
+   "doc": ""
+  },
+  {
+   "name": "Argument.get_error_hint",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3795,
+   "end": 3798,
+   "doc": ""
+  },
+  {
+   "name": "Argument.add_to_parser",
+   "kind": "method",
+   "file": "src/click/core.py",
+   "start": 3800,
+   "end": 3801,
+   "doc": ""
+  },
+  {
+   "name": "__getattr__",
+   "kind": "function",
+   "file": "src/click/core.py",
+   "start": 3804,
+   "end": 3825,
+   "doc": ""
+  },
+  {
+   "name": "pass_context",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 28,
+   "end": 36,
+   "doc": "Marks a callback as wanting to receive the current context"
+  },
+  {
+   "name": "pass_obj",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 39,
+   "end": 48,
+   "doc": "Similar to :func:`pass_context`, but only pass the object on the"
+  },
+  {
+   "name": "make_pass_decorator",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 51,
+   "end": 97,
+   "doc": "Given an object type this creates a decorator that will work"
+  },
+  {
+   "name": "pass_meta_key",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 100,
+   "end": 130,
+   "doc": "Create a decorator that passes a key from"
+  },
+  {
+   "name": "command",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 138,
+   "end": 138,
+   "doc": ""
+  },
+  {
+   "name": "command",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 144,
+   "end": 148,
+   "doc": ""
+  },
+  {
+   "name": "command",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 153,
+   "end": 158,
+   "doc": ""
+  },
+  {
+   "name": "command",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 163,
+   "end": 165,
+   "doc": ""
+  },
+  {
+   "name": "command",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 168,
+   "end": 255,
+   "doc": "Creates a new :class:`Command` and uses the decorated function as"
+  },
+  {
+   "name": "group",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 263,
+   "end": 263,
+   "doc": ""
+  },
+  {
+   "name": "group",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 269,
+   "end": 273,
+   "doc": ""
+  },
+  {
+   "name": "group",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 278,
+   "end": 283,
+   "doc": ""
+  },
+  {
+   "name": "group",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 288,
+   "end": 290,
+   "doc": ""
+  },
+  {
+   "name": "group",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 293,
+   "end": 311,
+   "doc": "Creates a new :class:`Group` with a function as callback.  This"
+  },
+  {
+   "name": "_param_memo",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 314,
+   "end": 321,
+   "doc": ""
+  },
+  {
+   "name": "argument",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 324,
+   "end": 349,
+   "doc": "Attaches an argument to the command.  All positional arguments are"
+  },
+  {
+   "name": "option",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 352,
+   "end": 377,
+   "doc": "Attaches an option to the command.  All positional arguments are"
+  },
+  {
+   "name": "confirmation_option",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 380,
+   "end": 401,
+   "doc": "Add a ``--yes`` option which shows a prompt before continuing if"
+  },
+  {
+   "name": "password_option",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 404,
+   "end": 418,
+   "doc": "Add a ``--password`` option which prompts for a password, hiding"
+  },
+  {
+   "name": "version_option",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 421,
+   "end": 556,
+   "doc": "Add a ``--version`` option which immediately prints the version"
+  },
+  {
+   "name": "custom_version_option",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 559,
+   "end": 598,
+   "doc": "Add a ``--version`` option whose output is produced by ``callback``."
+  },
+  {
+   "name": "help_option",
+   "kind": "function",
+   "file": "src/click/decorators.py",
+   "start": 601,
+   "end": 625,
+   "doc": "Pre-configured ``--help`` option which immediately prints the help page"
+  },
+  {
+   "name": "_join_param_hints",
+   "kind": "function",
+   "file": "src/click/exceptions.py",
+   "start": 19,
+   "end": 23,
+   "doc": ""
+  },
+  {
+   "name": "_format_possibilities",
+   "kind": "function",
+   "file": "src/click/exceptions.py",
+   "start": 26,
+   "end": 32,
+   "doc": ""
+  },
+  {
+   "name": "ClickException",
+   "kind": "class",
+   "file": "src/click/exceptions.py",
+   "start": 35,
+   "end": 65,
+   "doc": "An exception that Click can handle and show to the user."
+  },
+  {
+   "name": "ClickException.__init__",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 44,
+   "end": 49,
+   "doc": ""
+  },
+  {
+   "name": "ClickException.format_message",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 51,
+   "end": 52,
+   "doc": ""
+  },
+  {
+   "name": "ClickException.__str__",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 54,
+   "end": 55,
+   "doc": ""
+  },
+  {
+   "name": "ClickException.show",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 57,
+   "end": 65,
+   "doc": ""
+  },
+  {
+   "name": "UsageError",
+   "kind": "class",
+   "file": "src/click/exceptions.py",
+   "start": 68,
+   "end": 111,
+   "doc": "An internal exception that signals a usage error.  This typically"
+  },
+  {
+   "name": "UsageError.__init__",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 82,
+   "end": 85,
+   "doc": ""
+  },
+  {
+   "name": "UsageError.show",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 87,
+   "end": 111,
+   "doc": ""
+  },
+  {
+   "name": "BadParameter",
+   "kind": "class",
+   "file": "src/click/exceptions.py",
+   "start": 114,
+   "end": 156,
+   "doc": "An exception that formats out a standardized error message for a"
+  },
+  {
+   "name": "BadParameter.__init__",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 135,
+   "end": 144,
+   "doc": ""
+  },
+  {
+   "name": "BadParameter.format_message",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 146,
+   "end": 156,
+   "doc": ""
+  },
+  {
+   "name": "MissingParameter",
+   "kind": "class",
+   "file": "src/click/exceptions.py",
+   "start": 159,
+   "end": 229,
+   "doc": "Raised if click required an option or argument but it was not"
+  },
+  {
+   "name": "MissingParameter.__init__",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 173,
+   "end": 182,
+   "doc": ""
+  },
+  {
+   "name": "MissingParameter.format_message",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 184,
+   "end": 222,
+   "doc": ""
+  },
+  {
+   "name": "MissingParameter.__str__",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 224,
+   "end": 229,
+   "doc": ""
+  },
+  {
+   "name": "NoSuchOption",
+   "kind": "class",
+   "file": "src/click/exceptions.py",
+   "start": 232,
+   "end": 265,
+   "doc": "Raised if Click attempted to handle an option that does not exist."
+  },
+  {
+   "name": "NoSuchOption.__init__",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 241,
+   "end": 260,
+   "doc": ""
+  },
+  {
+   "name": "NoSuchOption.format_message",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 262,
+   "end": 265,
+   "doc": ""
+  },
+  {
+   "name": "NoSuchCommand",
+   "kind": "class",
+   "file": "src/click/exceptions.py",
+   "start": 268,
+   "end": 301,
+   "doc": "Raised if Click attempted to handle a command that does not exist."
+  },
+  {
+   "name": "NoSuchCommand.__init__",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 277,
+   "end": 296,
+   "doc": ""
+  },
+  {
+   "name": "NoSuchCommand.format_message",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 298,
+   "end": 301,
+   "doc": ""
+  },
+  {
+   "name": "BadOptionUsage",
+   "kind": "class",
+   "file": "src/click/exceptions.py",
+   "start": 304,
+   "end": 320,
+   "doc": "Raised if an option is generally supplied but the use of the option"
+  },
+  {
+   "name": "BadOptionUsage.__init__",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 316,
+   "end": 320,
+   "doc": ""
+  },
+  {
+   "name": "BadArgumentUsage",
+   "kind": "class",
+   "file": "src/click/exceptions.py",
+   "start": 323,
+   "end": 329,
+   "doc": "Raised if an argument is generally supplied but the use of the argument"
+  },
+  {
+   "name": "NoArgsIsHelpError",
+   "kind": "class",
+   "file": "src/click/exceptions.py",
+   "start": 332,
+   "end": 339,
+   "doc": ""
+  },
+  {
+   "name": "NoArgsIsHelpError.__init__",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 335,
+   "end": 336,
+   "doc": ""
+  },
+  {
+   "name": "NoArgsIsHelpError.show",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 338,
+   "end": 339,
+   "doc": ""
+  },
+  {
+   "name": "FileError",
+   "kind": "class",
+   "file": "src/click/exceptions.py",
+   "start": 342,
+   "end": 359,
+   "doc": "Raised if a file cannot be opened."
+  },
+  {
+   "name": "FileError.__init__",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 348,
+   "end": 354,
+   "doc": ""
+  },
+  {
+   "name": "FileError.format_message",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 356,
+   "end": 359,
+   "doc": ""
+  },
+  {
+   "name": "Abort",
+   "kind": "class",
+   "file": "src/click/exceptions.py",
+   "start": 362,
+   "end": 363,
+   "doc": "An internal signalling exception that signals Click to abort."
+  },
+  {
+   "name": "Exit",
+   "kind": "class",
+   "file": "src/click/exceptions.py",
+   "start": 366,
+   "end": 378,
+   "doc": "An exception that indicates that the application should exit with some"
+  },
+  {
+   "name": "Exit.__init__",
+   "kind": "method",
+   "file": "src/click/exceptions.py",
+   "start": 377,
+   "end": 378,
+   "doc": ""
+  },
+  {
+   "name": "measure_table",
+   "kind": "function",
+   "file": "src/click/formatting.py",
+   "start": 14,
+   "end": 21,
+   "doc": ""
+  },
+  {
+   "name": "iter_rows",
+   "kind": "function",
+   "file": "src/click/formatting.py",
+   "start": 24,
+   "end": 28,
+   "doc": ""
+  },
+  {
+   "name": "wrap_text",
+   "kind": "function",
+   "file": "src/click/formatting.py",
+   "start": 31,
+   "end": 107,
+   "doc": "A helper function that intelligently wraps text.  By default, it"
+  },
+  {
+   "name": "HelpFormatter",
+   "kind": "class",
+   "file": "src/click/formatting.py",
+   "start": 110,
+   "end": 299,
+   "doc": "This class helps with formatting text-based help pages.  It's"
+  },
+  {
+   "name": "HelpFormatter.__init__",
+   "kind": "method",
+   "file": "src/click/formatting.py",
+   "start": 127,
+   "end": 144,
+   "doc": ""
+  },
+  {
+   "name": "HelpFormatter.write",
+   "kind": "method",
+   "file": "src/click/formatting.py",
+   "start": 146,
+   "end": 148,
+   "doc": ""
+  },
+  {
+   "name": "HelpFormatter.indent",
+   "kind": "method",
+   "file": "src/click/formatting.py",
+   "start": 150,
+   "end": 152,
+   "doc": ""
+  },
+  {
+   "name": "HelpFormatter.dedent",
+   "kind": "method",
+   "file": "src/click/formatting.py",
+   "start": 154,
+   "end": 156,
+   "doc": ""
+  },
+  {
+   "name": "HelpFormatter.write_usage",
+   "kind": "method",
+   "file": "src/click/formatting.py",
+   "start": 158,
+   "end": 202,
+   "doc": ""
+  },
+  {
+   "name": "HelpFormatter.write_heading",
+   "kind": "method",
+   "file": "src/click/formatting.py",
+   "start": 204,
+   "end": 206,
+   "doc": ""
+  },
+  {
+   "name": "HelpFormatter.write_paragraph",
+   "kind": "method",
+   "file": "src/click/formatting.py",
+   "start": 208,
+   "end": 211,
+   "doc": ""
+  },
+  {
+   "name": "HelpFormatter.write_text",
+   "kind": "method",
+   "file": "src/click/formatting.py",
+   "start": 213,
+   "end": 227,
+   "doc": ""
+  },
+  {
+   "name": "HelpFormatter.write_dl",
+   "kind": "method",
+   "file": "src/click/formatting.py",
+   "start": 229,
+   "end": 271,
+   "doc": ""
+  },
+  {
+   "name": "HelpFormatter.section",
+   "kind": "method",
+   "file": "src/click/formatting.py",
+   "start": 274,
+   "end": 286,
+   "doc": ""
+  },
+  {
+   "name": "HelpFormatter.indentation",
+   "kind": "method",
+   "file": "src/click/formatting.py",
+   "start": 289,
+   "end": 295,
+   "doc": ""
+  },
+  {
+   "name": "HelpFormatter.getvalue",
+   "kind": "method",
+   "file": "src/click/formatting.py",
+   "start": 297,
+   "end": 299,
+   "doc": ""
+  },
+  {
+   "name": "join_options",
+   "kind": "function",
+   "file": "src/click/formatting.py",
+   "start": 302,
+   "end": 320,
+   "doc": "Given a list of option strings this joins them in the most appropriate"
+  },
+  {
+   "name": "get_current_context",
+   "kind": "function",
+   "file": "src/click/globals.py",
+   "start": 13,
+   "end": 13,
+   "doc": ""
+  },
+  {
+   "name": "get_current_context",
+   "kind": "function",
+   "file": "src/click/globals.py",
+   "start": 17,
+   "end": 17,
+   "doc": ""
+  },
+  {
+   "name": "get_current_context",
+   "kind": "function",
+   "file": "src/click/globals.py",
+   "start": 20,
+   "end": 41,
+   "doc": "Returns the current click context.  This can be used as a way to"
+  },
+  {
+   "name": "push_context",
+   "kind": "function",
+   "file": "src/click/globals.py",
+   "start": 44,
+   "end": 46,
+   "doc": "Pushes a new context to the current stack."
+  },
+  {
+   "name": "pop_context",
+   "kind": "function",
+   "file": "src/click/globals.py",
+   "start": 49,
+   "end": 51,
+   "doc": "Removes the top level from the stack."
+  },
+  {
+   "name": "resolve_color_default",
+   "kind": "function",
+   "file": "src/click/globals.py",
+   "start": 54,
+   "end": 67,
+   "doc": "Internal helper to get the default value of the color flag.  If a"
+  },
+  {
+   "name": "_unpack_args",
+   "kind": "function",
+   "file": "src/click/parser.py",
+   "start": 51,
+   "end": 108,
+   "doc": "Given an iterable of arguments and an iterable of nargs specifications,"
+  },
+  {
+   "name": "_split_opt",
+   "kind": "function",
+   "file": "src/click/parser.py",
+   "start": 111,
+   "end": 117,
+   "doc": ""
+  },
+  {
+   "name": "_normalize_opt",
+   "kind": "function",
+   "file": "src/click/parser.py",
+   "start": 120,
+   "end": 124,
+   "doc": ""
+  },
+  {
+   "name": "_Option",
+   "kind": "class",
+   "file": "src/click/parser.py",
+   "start": 127,
+   "end": 182,
+   "doc": ""
+  },
+  {
+   "name": "_Option.__init__",
+   "kind": "method",
+   "file": "src/click/parser.py",
+   "start": 128,
+   "end": 163,
+   "doc": ""
+  },
+  {
+   "name": "_Option.takes_value",
+   "kind": "method",
+   "file": "src/click/parser.py",
+   "start": 166,
+   "end": 167,
+   "doc": ""
+  },
+  {
+   "name": "_Option.process",
+   "kind": "method",
+   "file": "src/click/parser.py",
+   "start": 169,
+   "end": 182,
+   "doc": ""
+  },
+  {
+   "name": "_Argument",
+   "kind": "class",
+   "file": "src/click/parser.py",
+   "start": 185,
+   "end": 213,
+   "doc": ""
+  },
+  {
+   "name": "_Argument.__init__",
+   "kind": "method",
+   "file": "src/click/parser.py",
+   "start": 186,
+   "end": 189,
+   "doc": ""
+  },
+  {
+   "name": "_Argument.process",
+   "kind": "method",
+   "file": "src/click/parser.py",
+   "start": 191,
+   "end": 213,
+   "doc": ""
+  },
+  {
+   "name": "_ParsingState",
+   "kind": "class",
+   "file": "src/click/parser.py",
+   "start": 216,
+   "end": 221,
+   "doc": ""
+  },
+  {
+   "name": "_ParsingState.__init__",
+   "kind": "method",
+   "file": "src/click/parser.py",
+   "start": 217,
+   "end": 221,
+   "doc": ""
+  },
+  {
+   "name": "_OptionParser",
+   "kind": "class",
+   "file": "src/click/parser.py",
+   "start": 224,
+   "end": 500,
+   "doc": "The option parser is an internal class that is ultimately used to"
+  },
+  {
+   "name": "_OptionParser.__init__",
+   "kind": "method",
+   "file": "src/click/parser.py",
+   "start": 241,
+   "end": 263,
+   "doc": ""
+  },
+  {
+   "name": "_OptionParser.add_option",
+   "kind": "method",
+   "file": "src/click/parser.py",
+   "start": 265,
+   "end": 288,
+   "doc": ""
+  },
+  {
+   "name": "_OptionParser.add_argument",
+   "kind": "method",
+   "file": "src/click/parser.py",
+   "start": 290,
+   "end": 296,
+   "doc": ""
+  },
+  {
+   "name": "_OptionParser.parse_args",
+   "kind": "method",
+   "file": "src/click/parser.py",
+   "start": 298,
+   "end": 314,
+   "doc": ""
+  },
+  {
+   "name": "_OptionParser._process_args_for_args",
+   "kind": "method",
+   "file": "src/click/parser.py",
+   "start": 316,
+   "end": 325,
+   "doc": ""
+  },
+  {
+   "name": "_OptionParser._process_args_for_options",
+   "kind": "method",
+   "file": "src/click/parser.py",
+   "start": 327,
+   "end": 341,
+   "doc": ""
+  },
+  {
+   "name": "_OptionParser._match_long_opt",
+   "kind": "method",
+   "file": "src/click/parser.py",
+   "start": 363,
+   "end": 388,
+   "doc": ""
+  },
+  {
+   "name": "_OptionParser._match_short_opt",
+   "kind": "method",
+   "file": "src/click/parser.py",
+   "start": 390,
+   "end": 428,
+   "doc": ""
+  },
+  {
+   "name": "_OptionParser._get_value_from_state",
+   "kind": "method",
+   "file": "src/click/parser.py",
+   "start": 430,
+   "end": 468,
+   "doc": ""
+  },
+  {
+   "name": "_OptionParser._process_opts",
+   "kind": "method",
+   "file": "src/click/parser.py",
+   "start": 470,
+   "end": 500,
+   "doc": ""
+  },
+  {
+   "name": "__getattr__",
+   "kind": "function",
+   "file": "src/click/parser.py",
+   "start": 503,
+   "end": 533,
+   "doc": ""
+  },
+  {
+   "name": "shell_complete",
+   "kind": "function",
+   "file": "src/click/shell_completion.py",
+   "start": 19,
+   "end": 55,
+   "doc": "Perform shell completion for the given CLI program."
+  },
+  {
+   "name": "CompletionItem",
+   "kind": "class",
+   "file": "src/click/shell_completion.py",
+   "start": 67,
+   "end": 101,
+   "doc": "Represents a completion value and metadata about the value. The"
+  },
+  {
+   "name": "CompletionItem.__init__",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 88,
+   "end": 98,
+   "doc": ""
+  },
+  {
+   "name": "CompletionItem.__getattr__",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 100,
+   "end": 101,
+   "doc": ""
+  },
+  {
+   "name": "_SourceVarsDict",
+   "kind": "class",
+   "file": "src/click/shell_completion.py",
+   "start": 271,
+   "end": 274,
+   "doc": ""
+  },
+  {
+   "name": "ShellComplete",
+   "kind": "class",
+   "file": "src/click/shell_completion.py",
+   "start": 277,
+   "end": 385,
+   "doc": "Base class for providing shell completion support. A subclass for"
+  },
+  {
+   "name": "ShellComplete.__init__",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 306,
+   "end": 316,
+   "doc": ""
+  },
+  {
+   "name": "ShellComplete.func_name",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 319,
+   "end": 324,
+   "doc": ""
+  },
+  {
+   "name": "ShellComplete.source_vars",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 326,
+   "end": 336,
+   "doc": ""
+  },
+  {
+   "name": "ShellComplete.source",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 338,
+   "end": 344,
+   "doc": ""
+  },
+  {
+   "name": "ShellComplete.get_completion_args",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 346,
+   "end": 351,
+   "doc": ""
+  },
+  {
+   "name": "ShellComplete.get_completions",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 353,
+   "end": 365,
+   "doc": ""
+  },
+  {
+   "name": "ShellComplete.format_completion",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 367,
+   "end": 373,
+   "doc": ""
+  },
+  {
+   "name": "ShellComplete.complete",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 375,
+   "end": 385,
+   "doc": ""
+  },
+  {
+   "name": "BashComplete",
+   "kind": "class",
+   "file": "src/click/shell_completion.py",
+   "start": 388,
+   "end": 444,
+   "doc": "Shell completion for Bash."
+  },
+  {
+   "name": "BashComplete._check_version",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 395,
+   "end": 425,
+   "doc": ""
+  },
+  {
+   "name": "BashComplete.source",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 427,
+   "end": 429,
+   "doc": ""
+  },
+  {
+   "name": "BashComplete.get_completion_args",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 431,
+   "end": 441,
+   "doc": ""
+  },
+  {
+   "name": "BashComplete.format_completion",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 443,
+   "end": 444,
+   "doc": ""
+  },
+  {
+   "name": "ZshComplete",
+   "kind": "class",
+   "file": "src/click/shell_completion.py",
+   "start": 447,
+   "end": 476,
+   "doc": "Shell completion for Zsh."
+  },
+  {
+   "name": "ZshComplete.get_completion_args",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 453,
+   "end": 463,
+   "doc": ""
+  },
+  {
+   "name": "ZshComplete.format_completion",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 465,
+   "end": 476,
+   "doc": ""
+  },
+  {
+   "name": "FishComplete",
+   "kind": "class",
+   "file": "src/click/shell_completion.py",
+   "start": 479,
+   "end": 513,
+   "doc": "Shell completion for Fish."
+  },
+  {
+   "name": "FishComplete.get_completion_args",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 485,
+   "end": 497,
+   "doc": ""
+  },
+  {
+   "name": "FishComplete.format_completion",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 499,
+   "end": 513,
+   "doc": ""
+  },
+  {
+   "name": "PowerShellComplete",
+   "kind": "class",
+   "file": "src/click/shell_completion.py",
+   "start": 516,
+   "end": 547,
+   "doc": "Shell completion for PowerShell (Windows PowerShell 5.1+ and pwsh 7+)."
+  },
+  {
+   "name": "PowerShellComplete.get_completion_args",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 525,
+   "end": 535,
+   "doc": ""
+  },
+  {
+   "name": "PowerShellComplete.format_completion",
+   "kind": "method",
+   "file": "src/click/shell_completion.py",
+   "start": 537,
+   "end": 547,
+   "doc": ""
+  },
+  {
+   "name": "add_completion_class",
+   "kind": "function",
+   "file": "src/click/shell_completion.py",
+   "start": 560,
+   "end": 577,
+   "doc": "Register a :class:`ShellComplete` subclass under the given name."
+  },
+  {
+   "name": "get_completion_class",
+   "kind": "function",
+   "file": "src/click/shell_completion.py",
+   "start": 581,
+   "end": 581,
+   "doc": ""
+  },
+  {
+   "name": "get_completion_class",
+   "kind": "function",
+   "file": "src/click/shell_completion.py",
+   "start": 583,
+   "end": 583,
+   "doc": ""
+  },
+  {
+   "name": "get_completion_class",
+   "kind": "function",
+   "file": "src/click/shell_completion.py",
+   "start": 585,
+   "end": 585,
+   "doc": ""
+  },
+  {
+   "name": "get_completion_class",
+   "kind": "function",
+   "file": "src/click/shell_completion.py",
+   "start": 587,
+   "end": 587,
+   "doc": ""
+  },
+  {
+   "name": "get_completion_class",
+   "kind": "function",
+   "file": "src/click/shell_completion.py",
+   "start": 588,
+   "end": 595,
+   "doc": "Look up a registered :class:`ShellComplete` subclass by the name"
+  },
+  {
+   "name": "split_arg_string",
+   "kind": "function",
+   "file": "src/click/shell_completion.py",
+   "start": 598,
+   "end": 631,
+   "doc": "Split an argument string as with :func:`shlex.split`, but don't"
+  },
+  {
+   "name": "_is_incomplete_argument",
+   "kind": "function",
+   "file": "src/click/shell_completion.py",
+   "start": 634,
+   "end": 654,
+   "doc": "Determine if the given parameter is an argument that can still"
+  },
+  {
+   "name": "_start_of_option",
+   "kind": "function",
+   "file": "src/click/shell_completion.py",
+   "start": 657,
+   "end": 663,
+   "doc": "Check if the value looks like the start of an option."
+  },
+  {
+   "name": "_is_incomplete_option",
+   "kind": "function",
+   "file": "src/click/shell_completion.py",
+   "start": 666,
+   "end": 688,
+   "doc": "Determine if the given parameter is an option that needs a value."
+  },
+  {
+   "name": "_resolve_context",
+   "kind": "function",
+   "file": "src/click/shell_completion.py",
+   "start": 691,
+   "end": 749,
+   "doc": "Produce the context hierarchy starting with the command and"
+  },
+  {
+   "name": "_resolve_incomplete",
+   "kind": "function",
+   "file": "src/click/shell_completion.py",
+   "start": 752,
+   "end": 796,
+   "doc": "Find the Click object that will handle the completion of the"
+  },
+  {
+   "name": "_mask_hidden_input",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 61,
+   "end": 76,
+   "doc": "Replace occurrences of ``value`` in ``message`` with a fixed mask."
+  },
+  {
+   "name": "hidden_prompt_func",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 79,
+   "end": 82,
+   "doc": ""
+  },
+  {
+   "name": "_readline_prompt",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 85,
+   "end": 105,
+   "doc": "Call a prompt function, passing the full prompt so readline can"
+  },
+  {
+   "name": "_build_prompt",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 108,
+   "end": 125,
+   "doc": ""
+  },
+  {
+   "name": "_format_default",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 128,
+   "end": 135,
+   "doc": ""
+  },
+  {
+   "name": "prompt",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 139,
+   "end": 150,
+   "doc": ""
+  },
+  {
+   "name": "prompt",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 154,
+   "end": 165,
+   "doc": ""
+  },
+  {
+   "name": "prompt",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 168,
+   "end": 286,
+   "doc": "Prompts a user for input.  This is a convenience function that can"
+  },
+  {
+   "name": "confirm",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 289,
+   "end": 345,
+   "doc": "Prompts for confirmation (yes/no question)."
+  },
+  {
+   "name": "get_pager_file",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 348,
+   "end": 364,
+   "doc": "Context manager."
+  },
+  {
+   "name": "echo_via_pager",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 367,
+   "end": 399,
+   "doc": "This function takes a text and shows it via an environment specific"
+  },
+  {
+   "name": "progressbar",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 403,
+   "end": 419,
+   "doc": ""
+  },
+  {
+   "name": "progressbar",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 423,
+   "end": 440,
+   "doc": ""
+  },
+  {
+   "name": "progressbar",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 443,
+   "end": 599,
+   "doc": "This function creates an iterable context manager that can be used"
+  },
+  {
+   "name": "clear",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 602,
+   "end": 613,
+   "doc": "Clears the terminal screen.  This will have the effect of clearing"
+  },
+  {
+   "name": "_interpret_color",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 616,
+   "end": 638,
+   "doc": "Interprets a color value and returns the corresponding ANSI code."
+  },
+  {
+   "name": "style",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 641,
+   "end": 765,
+   "doc": "Styles a text with ANSI styles and returns the new string.  By"
+  },
+  {
+   "name": "unstyle",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 768,
+   "end": 777,
+   "doc": "Removes ANSI styling information from a string.  Usually it's not"
+  },
+  {
+   "name": "secho",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 780,
+   "end": 811,
+   "doc": "This function combines :func:`echo` and :func:`style` into one"
+  },
+  {
+   "name": "edit",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 815,
+   "end": 821,
+   "doc": ""
+  },
+  {
+   "name": "edit",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 825,
+   "end": 831,
+   "doc": ""
+  },
+  {
+   "name": "edit",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 835,
+   "end": 845,
+   "doc": ""
+  },
+  {
+   "name": "edit",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 848,
+   "end": 920,
+   "doc": "Edits the given text in the defined editor.  If an editor is given"
+  },
+  {
+   "name": "launch",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 923,
+   "end": 949,
+   "doc": "This function launches the given URL (or filename) in the default"
+  },
+  {
+   "name": "getchar",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 957,
+   "end": 984,
+   "doc": "Fetches a single character from the terminal and returns it.  This"
+  },
+  {
+   "name": "raw_terminal",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 987,
+   "end": 990,
+   "doc": ""
+  },
+  {
+   "name": "pause",
+   "kind": "function",
+   "file": "src/click/termui.py",
+   "start": 993,
+   "end": 1024,
+   "doc": "This command stops execution and waits for the user to press any"
+  },
+  {
+   "name": "EchoingStdin",
+   "kind": "class",
+   "file": "src/click/testing.py",
+   "start": 32,
+   "end": 67,
+   "doc": ""
+  },
+  {
+   "name": "EchoingStdin.__init__",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 37,
+   "end": 40,
+   "doc": ""
+  },
+  {
+   "name": "EchoingStdin.__getattr__",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 42,
+   "end": 43,
+   "doc": ""
+  },
+  {
+   "name": "EchoingStdin._echo",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 45,
+   "end": 49,
+   "doc": ""
+  },
+  {
+   "name": "EchoingStdin.read",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 51,
+   "end": 52,
+   "doc": ""
+  },
+  {
+   "name": "EchoingStdin.read1",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 54,
+   "end": 55,
+   "doc": ""
+  },
+  {
+   "name": "EchoingStdin.readline",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 57,
+   "end": 58,
+   "doc": ""
+  },
+  {
+   "name": "EchoingStdin.readlines",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 60,
+   "end": 61,
+   "doc": ""
+  },
+  {
+   "name": "EchoingStdin.__iter__",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 63,
+   "end": 64,
+   "doc": ""
+  },
+  {
+   "name": "EchoingStdin.__repr__",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 66,
+   "end": 67,
+   "doc": ""
+  },
+  {
+   "name": "_pause_echo",
+   "kind": "function",
+   "file": "src/click/testing.py",
+   "start": 71,
+   "end": 77,
+   "doc": ""
+  },
+  {
+   "name": "_FDCapture",
+   "kind": "class",
+   "file": "src/click/testing.py",
+   "start": 80,
+   "end": 114,
+   "doc": "Redirect a file descriptor to a temporary file for capture."
+  },
+  {
+   "name": "_FDCapture.__init__",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 95,
+   "end": 98,
+   "doc": ""
+  },
+  {
+   "name": "_FDCapture.start",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 100,
+   "end": 103,
+   "doc": ""
+  },
+  {
+   "name": "_FDCapture.stop",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 105,
+   "end": 114,
+   "doc": ""
+  },
+  {
+   "name": "BytesIOCopy",
+   "kind": "class",
+   "file": "src/click/testing.py",
+   "start": 117,
+   "end": 135,
+   "doc": "Patch ``io.BytesIO`` to let the written stream be copied to another."
+  },
+  {
+   "name": "BytesIOCopy.__init__",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 125,
+   "end": 127,
+   "doc": ""
+  },
+  {
+   "name": "BytesIOCopy.flush",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 129,
+   "end": 131,
+   "doc": ""
+  },
+  {
+   "name": "BytesIOCopy.write",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 133,
+   "end": 135,
+   "doc": ""
+  },
+  {
+   "name": "StreamMixer",
+   "kind": "class",
+   "file": "src/click/testing.py",
+   "start": 138,
+   "end": 153,
+   "doc": "Mixes `<stdout>` and `<stderr>` streams."
+  },
+  {
+   "name": "StreamMixer.__init__",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 150,
+   "end": 153,
+   "doc": ""
+  },
+  {
+   "name": "_NamedTextIOWrapper",
+   "kind": "class",
+   "file": "src/click/testing.py",
+   "start": 156,
+   "end": 208,
+   "doc": "A :class:`~io.TextIOWrapper` with custom ``name`` and ``mode``"
+  },
+  {
+   "name": "_NamedTextIOWrapper.__init__",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 172,
+   "end": 182,
+   "doc": ""
+  },
+  {
+   "name": "_NamedTextIOWrapper.close",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 184,
+   "end": 190,
+   "doc": ""
+  },
+  {
+   "name": "_NamedTextIOWrapper.fileno",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 192,
+   "end": 200,
+   "doc": ""
+  },
+  {
+   "name": "_NamedTextIOWrapper.name",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 203,
+   "end": 204,
+   "doc": ""
+  },
+  {
+   "name": "_NamedTextIOWrapper.mode",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 207,
+   "end": 208,
+   "doc": ""
+  },
+  {
+   "name": "make_input_stream",
+   "kind": "function",
+   "file": "src/click/testing.py",
+   "start": 211,
+   "end": 228,
+   "doc": ""
+  },
+  {
+   "name": "Result",
+   "kind": "class",
+   "file": "src/click/testing.py",
+   "start": 231,
+   "end": 314,
+   "doc": "Holds the captured result of an invoked CLI script."
+  },
+  {
+   "name": "Result.__init__",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 262,
+   "end": 280,
+   "doc": ""
+  },
+  {
+   "name": "Result.output",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 283,
+   "end": 292,
+   "doc": ""
+  },
+  {
+   "name": "Result.stdout",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 295,
+   "end": 299,
+   "doc": ""
+  },
+  {
+   "name": "Result.stderr",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 302,
+   "end": 310,
+   "doc": ""
+  },
+  {
+   "name": "Result.__repr__",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 312,
+   "end": 314,
+   "doc": ""
+  },
+  {
+   "name": "CliRunner",
+   "kind": "class",
+   "file": "src/click/testing.py",
+   "start": 317,
+   "end": 796,
+   "doc": "The CLI runner provides functionality to invoke a Click command line"
+  },
+  {
+   "name": "CliRunner.__init__",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 359,
+   "end": 379,
+   "doc": ""
+  },
+  {
+   "name": "CliRunner.get_default_prog_name",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 381,
+   "end": 386,
+   "doc": ""
+  },
+  {
+   "name": "CliRunner.make_env",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 388,
+   "end": 395,
+   "doc": ""
+  },
+  {
+   "name": "CliRunner.isolation",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 398,
+   "end": 593,
+   "doc": ""
+  },
+  {
+   "name": "CliRunner.invoke",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 595,
+   "end": 738,
+   "doc": ""
+  },
+  {
+   "name": "CliRunner.isolated_filesystem",
+   "kind": "method",
+   "file": "src/click/testing.py",
+   "start": 741,
+   "end": 796,
+   "doc": ""
+  },
+  {
+   "name": "ParamTypeInfoDict",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 60,
+   "end": 62,
+   "doc": ""
+  },
+  {
+   "name": "ParamType",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 65,
+   "end": 239,
+   "doc": "Represents the type of a parameter. Validates and converts values"
+  },
+  {
+   "name": "ParamType.to_info_dict",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 122,
+   "end": 141,
+   "doc": ""
+  },
+  {
+   "name": "ParamType.__call__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 144,
+   "end": 149,
+   "doc": ""
+  },
+  {
+   "name": "ParamType.__call__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 152,
+   "end": 157,
+   "doc": ""
+  },
+  {
+   "name": "ParamType.__call__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 159,
+   "end": 167,
+   "doc": ""
+  },
+  {
+   "name": "ParamType.get_metavar",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 169,
+   "end": 170,
+   "doc": ""
+  },
+  {
+   "name": "ParamType.get_missing_message",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 172,
+   "end": 177,
+   "doc": ""
+  },
+  {
+   "name": "ParamType.convert",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 179,
+   "end": 203,
+   "doc": ""
+  },
+  {
+   "name": "ParamType.split_envvar_value",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 205,
+   "end": 213,
+   "doc": ""
+  },
+  {
+   "name": "ParamType.fail",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 215,
+   "end": 222,
+   "doc": ""
+  },
+  {
+   "name": "ParamType.shell_complete",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 224,
+   "end": 239,
+   "doc": ""
+  },
+  {
+   "name": "CompositeParamType",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 242,
+   "end": 247,
+   "doc": ""
+  },
+  {
+   "name": "CompositeParamType.arity",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 247,
+   "end": 247,
+   "doc": ""
+  },
+  {
+   "name": "FuncParamType",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 264,
+   "end": 289,
+   "doc": ""
+  },
+  {
+   "name": "FuncParamType.__init__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 268,
+   "end": 270,
+   "doc": ""
+  },
+  {
+   "name": "FuncParamType.to_info_dict",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 272,
+   "end": 273,
+   "doc": ""
+  },
+  {
+   "name": "FuncParamType.convert",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 275,
+   "end": 289,
+   "doc": ""
+  },
+  {
+   "name": "UnprocessedParamType",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 292,
+   "end": 301,
+   "doc": ""
+  },
+  {
+   "name": "UnprocessedParamType.convert",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 295,
+   "end": 298,
+   "doc": ""
+  },
+  {
+   "name": "UnprocessedParamType.__repr__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 300,
+   "end": 301,
+   "doc": ""
+  },
+  {
+   "name": "StringParamType",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 304,
+   "end": 326,
+   "doc": ""
+  },
+  {
+   "name": "StringParamType.convert",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 307,
+   "end": 323,
+   "doc": ""
+  },
+  {
+   "name": "StringParamType.__repr__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 325,
+   "end": 326,
+   "doc": ""
+  },
+  {
+   "name": "Choice",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 342,
+   "end": 515,
+   "doc": "The choice type allows a value to be checked against a fixed set"
+  },
+  {
+   "name": "Choice.__init__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 375,
+   "end": 379,
+   "doc": ""
+  },
+  {
+   "name": "Choice.to_info_dict",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 381,
+   "end": 386,
+   "doc": ""
+  },
+  {
+   "name": "Choice._normalized_mapping",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 388,
+   "end": 404,
+   "doc": ""
+  },
+  {
+   "name": "Choice.normalize_choice",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 406,
+   "end": 424,
+   "doc": ""
+  },
+  {
+   "name": "Choice.get_metavar",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 426,
+   "end": 442,
+   "doc": ""
+  },
+  {
+   "name": "Choice.get_missing_message",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 444,
+   "end": 452,
+   "doc": ""
+  },
+  {
+   "name": "Choice.convert",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 454,
+   "end": 476,
+   "doc": ""
+  },
+  {
+   "name": "Choice.get_invalid_choice_message",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 478,
+   "end": 490,
+   "doc": ""
+  },
+  {
+   "name": "Choice.__repr__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 492,
+   "end": 493,
+   "doc": ""
+  },
+  {
+   "name": "Choice.shell_complete",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 495,
+   "end": 515,
+   "doc": ""
+  },
+  {
+   "name": "DateTimeInfoDict",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 518,
+   "end": 519,
+   "doc": ""
+  },
+  {
+   "name": "DateTime",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 522,
+   "end": 590,
+   "doc": "The DateTime type converts date strings into `datetime` objects."
+  },
+  {
+   "name": "DateTime.__init__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 547,
+   "end": 552,
+   "doc": ""
+  },
+  {
+   "name": "DateTime.to_info_dict",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 554,
+   "end": 555,
+   "doc": ""
+  },
+  {
+   "name": "DateTime.get_metavar",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 557,
+   "end": 558,
+   "doc": ""
+  },
+  {
+   "name": "DateTime._try_to_convert_date",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 560,
+   "end": 564,
+   "doc": ""
+  },
+  {
+   "name": "DateTime.convert",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 566,
+   "end": 587,
+   "doc": ""
+  },
+  {
+   "name": "DateTime.__repr__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 589,
+   "end": 590,
+   "doc": ""
+  },
+  {
+   "name": "_NumberParamTypeBase",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 593,
+   "end": 610,
+   "doc": ""
+  },
+  {
+   "name": "_NumberParamTypeBase.convert",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 598,
+   "end": 610,
+   "doc": ""
+  },
+  {
+   "name": "_NumberRangeBase",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 632,
+   "end": 733,
+   "doc": ""
+  },
+  {
+   "name": "_NumberRangeBase.__init__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 642,
+   "end": 654,
+   "doc": ""
+  },
+  {
+   "name": "_NumberRangeBase.to_info_dict",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 656,
+   "end": 664,
+   "doc": ""
+  },
+  {
+   "name": "_NumberRangeBase.convert",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 666,
+   "end": 697,
+   "doc": ""
+  },
+  {
+   "name": "_NumberRangeBase._clamp",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 700,
+   "end": 715,
+   "doc": ""
+  },
+  {
+   "name": "_NumberRangeBase._describe_range",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 717,
+   "end": 729,
+   "doc": ""
+  },
+  {
+   "name": "_NumberRangeBase.__repr__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 731,
+   "end": 733,
+   "doc": ""
+  },
+  {
+   "name": "IntParamType",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 736,
+   "end": 741,
+   "doc": ""
+  },
+  {
+   "name": "IntParamType.__repr__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 740,
+   "end": 741,
+   "doc": ""
+  },
+  {
+   "name": "IntRange",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 744,
+   "end": 765,
+   "doc": "Restrict an :data:`click.INT` value to a range of accepted"
+  },
+  {
+   "name": "IntRange._clamp",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 761,
+   "end": 765,
+   "doc": ""
+  },
+  {
+   "name": "FloatParamType",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 768,
+   "end": 773,
+   "doc": ""
+  },
+  {
+   "name": "FloatParamType.__repr__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 772,
+   "end": 773,
+   "doc": ""
+  },
+  {
+   "name": "FloatRange",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 776,
+   "end": 816,
+   "doc": "Restrict a :data:`click.FLOAT` value to a range of accepted"
+  },
+  {
+   "name": "FloatRange.__init__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 794,
+   "end": 807,
+   "doc": ""
+  },
+  {
+   "name": "FloatRange._clamp",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 809,
+   "end": 816,
+   "doc": ""
+  },
+  {
+   "name": "BoolParamType",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 819,
+   "end": 885,
+   "doc": ""
+  },
+  {
+   "name": "BoolParamType.str_to_bool",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 856,
+   "end": 868,
+   "doc": ""
+  },
+  {
+   "name": "BoolParamType.convert",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 870,
+   "end": 882,
+   "doc": ""
+  },
+  {
+   "name": "BoolParamType.__repr__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 884,
+   "end": 885,
+   "doc": ""
+  },
+  {
+   "name": "UUIDParameterType",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 888,
+   "end": 907,
+   "doc": ""
+  },
+  {
+   "name": "UUIDParameterType.convert",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 891,
+   "end": 904,
+   "doc": ""
+  },
+  {
+   "name": "UUIDParameterType.__repr__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 906,
+   "end": 907,
+   "doc": ""
+  },
+  {
+   "name": "FileInfoDict",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 910,
+   "end": 912,
+   "doc": ""
+  },
+  {
+   "name": "File",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 915,
+   "end": 1043,
+   "doc": "Declares a parameter to be a file for reading or writing.  The file"
+  },
+  {
+   "name": "File.__init__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 954,
+   "end": 966,
+   "doc": ""
+  },
+  {
+   "name": "File.to_info_dict",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 968,
+   "end": 973,
+   "doc": ""
+  },
+  {
+   "name": "File.resolve_lazy_flag",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 975,
+   "end": 982,
+   "doc": ""
+  },
+  {
+   "name": "File.convert",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 984,
+   "end": 1027,
+   "doc": ""
+  },
+  {
+   "name": "File.shell_complete",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 1029,
+   "end": 1043,
+   "doc": ""
+  },
+  {
+   "name": "_is_file_like",
+   "kind": "function",
+   "file": "src/click/types.py",
+   "start": 1046,
+   "end": 1047,
+   "doc": ""
+  },
+  {
+   "name": "PathInfoDict",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 1050,
+   "end": 1056,
+   "doc": ""
+  },
+  {
+   "name": "Path",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 1059,
+   "end": 1251,
+   "doc": "The ``Path`` type is similar to the :class:`File` type, but"
+  },
+  {
+   "name": "Path.__init__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 1107,
+   "end": 1134,
+   "doc": ""
+  },
+  {
+   "name": "Path.to_info_dict",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 1136,
+   "end": 1145,
+   "doc": ""
+  },
+  {
+   "name": "Path.coerce_path_result",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 1147,
+   "end": 1159,
+   "doc": ""
+  },
+  {
+   "name": "Path.convert",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 1161,
+   "end": 1233,
+   "doc": ""
+  },
+  {
+   "name": "Path.shell_complete",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 1235,
+   "end": 1251,
+   "doc": ""
+  },
+  {
+   "name": "TupleInfoDict",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 1254,
+   "end": 1255,
+   "doc": ""
+  },
+  {
+   "name": "Tuple",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 1258,
+   "end": 1308,
+   "doc": "The default behavior of Click is to apply a type on a value directly."
+  },
+  {
+   "name": "Tuple.__init__",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 1272,
+   "end": 1273,
+   "doc": ""
+  },
+  {
+   "name": "Tuple.to_info_dict",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 1275,
+   "end": 1279,
+   "doc": ""
+  },
+  {
+   "name": "Tuple.name",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 1282,
+   "end": 1283,
+   "doc": ""
+  },
+  {
+   "name": "Tuple.arity",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 1286,
+   "end": 1287,
+   "doc": ""
+  },
+  {
+   "name": "Tuple.convert",
+   "kind": "method",
+   "file": "src/click/types.py",
+   "start": 1289,
+   "end": 1308,
+   "doc": ""
+  },
+  {
+   "name": "_guess_type",
+   "kind": "function",
+   "file": "src/click/types.py",
+   "start": 1311,
+   "end": 1343,
+   "doc": "Infer a type from *ty* or *default*."
+  },
+  {
+   "name": "convert_type",
+   "kind": "function",
+   "file": "src/click/types.py",
+   "start": 1347,
+   "end": 1347,
+   "doc": ""
+  },
+  {
+   "name": "convert_type",
+   "kind": "function",
+   "file": "src/click/types.py",
+   "start": 1349,
+   "end": 1351,
+   "doc": ""
+  },
+  {
+   "name": "convert_type",
+   "kind": "function",
+   "file": "src/click/types.py",
+   "start": 1353,
+   "end": 1355,
+   "doc": ""
+  },
+  {
+   "name": "convert_type",
+   "kind": "function",
+   "file": "src/click/types.py",
+   "start": 1356,
+   "end": 1397,
+   "doc": "Find the most appropriate :class:`ParamType` for the given Python"
+  },
+  {
+   "name": "OptionHelpExtra",
+   "kind": "class",
+   "file": "src/click/types.py",
+   "start": 1433,
+   "end": 1437,
+   "doc": ""
+  },
+  {
+   "name": "_posixify",
+   "kind": "function",
+   "file": "src/click/utils.py",
+   "start": 32,
+   "end": 33,
+   "doc": ""
+  },
+  {
+   "name": "_safecall",
+   "kind": "function",
+   "file": "src/click/utils.py",
+   "start": 36,
+   "end": 49,
+   "doc": "Wraps a function so that it swallows exceptions."
+  },
+  {
+   "name": "make_str",
+   "kind": "function",
+   "file": "src/click/utils.py",
+   "start": 52,
+   "end": 59,
+   "doc": "Converts a value into a valid string."
+  },
+  {
+   "name": "_make_default_short_help",
+   "kind": "function",
+   "file": "src/click/utils.py",
+   "start": 62,
+   "end": 100,
+   "doc": "Returns a condensed version of help string."
+  },
+  {
+   "name": "_LazyFile",
+   "kind": "class",
+   "file": "src/click/utils.py",
+   "start": 103,
+   "end": 196,
+   "doc": "A lazy file works like a regular file but it does not fully open"
+  },
+  {
+   "name": "_LazyFile.__init__",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 120,
+   "end": 143,
+   "doc": ""
+  },
+  {
+   "name": "_LazyFile.__getattr__",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 145,
+   "end": 146,
+   "doc": ""
+  },
+  {
+   "name": "_LazyFile.__repr__",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 148,
+   "end": 151,
+   "doc": ""
+  },
+  {
+   "name": "_LazyFile.open",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 153,
+   "end": 169,
+   "doc": ""
+  },
+  {
+   "name": "_LazyFile.close",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 171,
+   "end": 174,
+   "doc": ""
+  },
+  {
+   "name": "_LazyFile.close_intelligently",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 176,
+   "end": 181,
+   "doc": ""
+  },
+  {
+   "name": "_LazyFile.__enter__",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 183,
+   "end": 184,
+   "doc": ""
+  },
+  {
+   "name": "_LazyFile.__exit__",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 186,
+   "end": 192,
+   "doc": ""
+  },
+  {
+   "name": "_LazyFile.__iter__",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 194,
+   "end": 196,
+   "doc": ""
+  },
+  {
+   "name": "_KeepOpenFile",
+   "kind": "class",
+   "file": "src/click/utils.py",
+   "start": 199,
+   "end": 237,
+   "doc": "Proxy a file object but keep it open across a ``with`` block."
+  },
+  {
+   "name": "_KeepOpenFile.__init__",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 216,
+   "end": 217,
+   "doc": ""
+  },
+  {
+   "name": "_KeepOpenFile.__getattr__",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 219,
+   "end": 220,
+   "doc": ""
+  },
+  {
+   "name": "_KeepOpenFile.__enter__",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 222,
+   "end": 223,
+   "doc": ""
+  },
+  {
+   "name": "_KeepOpenFile.__exit__",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 225,
+   "end": 231,
+   "doc": ""
+  },
+  {
+   "name": "_KeepOpenFile.__repr__",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 233,
+   "end": 234,
+   "doc": ""
+  },
+  {
+   "name": "_KeepOpenFile.__iter__",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 236,
+   "end": 237,
+   "doc": ""
+  },
+  {
+   "name": "echo",
+   "kind": "function",
+   "file": "src/click/utils.py",
+   "start": 240,
+   "end": 334,
+   "doc": "Print a message and newline to stdout or a file. This should be"
+  },
+  {
+   "name": "_get_binary_stream",
+   "kind": "function",
+   "file": "src/click/utils.py",
+   "start": 337,
+   "end": 351,
+   "doc": "Returns a system stream for byte processing."
+  },
+  {
+   "name": "_get_text_stream",
+   "kind": "function",
+   "file": "src/click/utils.py",
+   "start": 354,
+   "end": 378,
+   "doc": "Returns a system stream for text processing."
+  },
+  {
+   "name": "open_file",
+   "kind": "function",
+   "file": "src/click/utils.py",
+   "start": 381,
+   "end": 427,
+   "doc": "Open a file, with extra behavior to handle ``'-'`` to indicate"
+  },
+  {
+   "name": "format_filename",
+   "kind": "function",
+   "file": "src/click/utils.py",
+   "start": 430,
+   "end": 469,
+   "doc": "Format a filename as a string for display. Ensures the filename can be"
+  },
+  {
+   "name": "get_app_dir",
+   "kind": "function",
+   "file": "src/click/utils.py",
+   "start": 472,
+   "end": 518,
+   "doc": "Returns the config folder for the application.  The default behavior"
+  },
+  {
+   "name": "_PacifyFlushWrapper",
+   "kind": "class",
+   "file": "src/click/utils.py",
+   "start": 521,
+   "end": 547,
+   "doc": "This wrapper is used to catch and suppress BrokenPipeErrors resulting"
+  },
+  {
+   "name": "_PacifyFlushWrapper.__init__",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 534,
+   "end": 535,
+   "doc": ""
+  },
+  {
+   "name": "_PacifyFlushWrapper.flush",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 537,
+   "end": 544,
+   "doc": ""
+  },
+  {
+   "name": "_PacifyFlushWrapper.__getattr__",
+   "kind": "method",
+   "file": "src/click/utils.py",
+   "start": 546,
+   "end": 547,
+   "doc": ""
+  },
+  {
+   "name": "_detect_program_name",
+   "kind": "function",
+   "file": "src/click/utils.py",
+   "start": 550,
+   "end": 602,
+   "doc": "Determine the command used to run the program, for use in help"
+  },
+  {
+   "name": "_expand_args",
+   "kind": "function",
+   "file": "src/click/utils.py",
+   "start": 605,
+   "end": 654,
+   "doc": "Simulate Unix shell expansion with Python functions."
+  },
+  {
+   "name": "__getattr__",
+   "kind": "function",
+   "file": "src/click/utils.py",
+   "start": 657,
+   "end": 676,
+   "doc": ""
+  }
+ ]
+}
