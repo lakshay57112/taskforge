@@ -72,6 +72,15 @@ jobs:
 
       - name: Run TaskForge
         run: |
+          # snapshot progress to the factory-output branch every 5 minutes
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          SNAP=$(mktemp -d); git worktree add -q --detach "$SNAP" HEAD
+          ( while sleep 300; do
+              mkdir -p "$SNAP/output"; rsync -a --delete --exclude harbor-jobs output/ "$SNAP/output/" 2>/dev/null
+              cp factory.log "$SNAP/" 2>/dev/null
+              ( cd "$SNAP" && git add -f factory.log output && git commit -q -m "Factory run ${{ github.run_id }}: in progress" && git push -q -f origin HEAD:factory-output ) >/dev/null 2>&1
+            done ) &
           ARGS=(--tasks "$TASKS" --provider "$PROVIDER")
           if [ -n "$MODEL" ]; then ARGS+=(--model "$MODEL"); fi
           taskforge run "${ARGS[@]}" 2>&1 | tee factory.log

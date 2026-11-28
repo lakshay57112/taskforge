@@ -74,7 +74,8 @@ class GeminiBackend:
             )
         self.model = model
         self._types = types
-        self._client = genai.Client(api_key=key)
+        # a hard per-request timeout, so one stuck call can never stall a whole run
+        self._client = genai.Client(api_key=key, http_options=types.HttpOptions(timeout=600_000))
 
     def generate(self, system, prompt, *, temperature, seed, json_mode, model=None):
         types = self._types
